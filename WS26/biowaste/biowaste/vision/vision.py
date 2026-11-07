@@ -133,8 +133,13 @@ def load_model():
     if _model is None:
         from transformers import CLIPModel, CLIPProcessor  # first run downloads ~600 MB
         print(f"model: {MODEL}")
-        _model = CLIPModel.from_pretrained(MODEL).eval()
-        _proc = CLIPProcessor.from_pretrained(MODEL)
+        try:   # cached copy first - works offline (phone hotspot without internet)
+            _model = CLIPModel.from_pretrained(MODEL, local_files_only=True).eval()
+            _proc = CLIPProcessor.from_pretrained(MODEL, local_files_only=True)
+        except Exception:
+            print("model not cached yet - downloading (needs internet)...")
+            _model = CLIPModel.from_pretrained(MODEL).eval()
+            _proc = CLIPProcessor.from_pretrained(MODEL)
         load_refs()
     return _model, _proc
 
@@ -435,14 +440,50 @@ def annotate(frame, items):
     return img
 
 
-def log(r, changed):
+TYPE_KEYS = {"1": "preparation_waste", "2": "spoiled_stock", "3": "plate_leftovers"}
+LOG_HEADER = ["timestamp", "type", "food", "food_conf", "top3", "image_id", "changed_pct"]
+
+
+def log(r, changed, wtype=""):
+    if os.path.exists(LOG):
+        with open(LOG, newline="") as f:
+            first = f.readline().strip()
+        if first != ",".join(LOG_HEADER):          # old format -> keep it aside, start fresh
+            os.replace(LOG, LOG.replace(".csv", "_old.csv"))
     new = not os.path.exists(LOG)
     with open(LOG, "a", newline="") as f:
         w = csv.writer(f)
         if new:
-            w.writerow(["timestamp", "food", "food_conf", "top3", "image_id", "changed_pct"])
-        w.writerow([datetime.now().isoformat(timespec="seconds"), r["food"], r["food_conf"],
+            w.writerow(LOG_HEADER)
+        w.writerow([datetime.now().isoformat(timespec="seconds"), wtype, r["food"], r["food_conf"],
                     "; ".join(f"{l}:{p:.2f}" for l, p in r["top3"]), r["image_id"], round(changed, 2)])
+
+
+def summary():
+    """Today's disposals per waste type and per food (counts - grams come from the scale)."""
+    if not os.path.exists(LOG):
+        print("  no disposals logged yet")
+        return
+    today = datetime.now().strftime("%Y-%m-%d")
+    rows = [r for r in csv.DictReader(open(LOG, newline="")) if r["timestamp"].startswith(today)
+            and r.get("food") not in ("empty", None)]
+    if not rows:
+        print("  no disposals today")
+        return
+    by_type, by_food = {}, {}
+    for r in rows:
+        t = r.get("type") or "unknown_type"
+        by_type[t] = by_type.get(t, 0) + 1
+        by_food.setdefault(t, {}).setdefault(r["food"], 0)
+        by_food[t][r["food"]] += 1
+    n = len(rows)
+    print(f"  today: {n} items")
+    for t, k in sorted(by_type.items(), key=lambda x: -x[1]):
+        foods = ", ".join(f"{f} {c}" for f, c in sorted(by_food[t].items(), key=lambda x: -x[1]))
+        print(f"  {t:20s} {k:3d}  ({100 * k / n:4.0f}%)   {foods}")
+    top = max(by_type, key=by_type.get)
+    top_food = max(by_food[top], key=by_food[top].get)
+    print(f"  biggest stream: {top} - mostly {top_food}")
 
 
 def show(r, ms):
@@ -570,7 +611,10 @@ def snapshot_retry(phone):
 def manual(phone):
     print("""
 KEY-PRESS mode - one picture per disposal, compared with the previous picture.
-  Enter              throw something in, hand out of view, then press Enter -> what was added
+  1 / 2 / 3          throw something in, hand away, press the TYPE key -> picture + type in one touch
+                       1 = preparation waste   2 = spoiled stock   3 = plate leftovers
+  Enter              same, but type unknown
+  s                  summary: items per type and food today
   r                  new reference (tray emptied / bag changed / camera moved)
   roi                find the white paper and only look there (ignores walls + reflections) - do this first
   roi off            look at the whole picture again
@@ -612,6 +656,9 @@ vision/last.jpg (and the live view) shows each detected item with a box; blue = 
                 print(f"  area of interest set {tuple(round(v, 2) for v in roi)} - check the blue box in last.jpg")
                 ref = f
             continue
+        if cmd == "s":
+            summary()
+            continue
         if cmd == "items":
             for l in FOODS:
                 folder = os.path.join(REFS, l)
@@ -644,8 +691,9 @@ vision/last.jpg (and the live view) shows each detected item with a box; blue = 
                 load_refs()
                 print(f"  saved as reference for '{label}' - used from the next item on")
             continue
-        if cmd:
-            print("  unknown command (Enter / r / roi / c <label> / items / add <item> / q)")
+        wtype = TYPE_KEYS.get(cmd, "")
+        if cmd and not wtype:
+            print("  unknown command (1/2/3 / Enter / s / r / roi / c <label> / items / add <item> / q)")
             continue
         frames = [snapshot_retry(phone) for _ in range(BURST)]
         changed = diff_pct(ref, frames[-1])
@@ -665,11 +713,12 @@ vision/last.jpg (and the live view) shows each detected item with a box; blue = 
         else:
             n += 1
             for i, r in enumerate(food_items):
-                print(f"  #{n}{'abcdefgh'[i] if len(food_items) > 1 else ''}", end="")
+                print(f"  #{n}{'abcdefgh'[i] if len(food_items) > 1 else ''} {wtype or 'type?':18s}", end="")
                 show(r, ms)
         for r in items:
-            log(r, changed)
-        set_view(frames[-1], items, ", ".join(f"{r['food']} {r['food_conf']:.0%}" for r in food_items) or None)
+            log(r, changed, wtype if r["food"] != "empty" else "")
+        set_view(frames[-1], items, (f"[{wtype}] " if wtype and food_items else "") +
+                 ", ".join(f"{r['food']} {r['food_conf']:.0%}" for r in food_items) or None)
         last_items = food_items
         ref = frames[-1]          # this picture is the "before" for the next disposal
 

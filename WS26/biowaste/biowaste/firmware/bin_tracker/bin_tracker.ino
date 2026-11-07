@@ -7,13 +7,6 @@
  *   Button SPOIL (spoiled_stock)     -> GPIO26 to GND
  *   Button PLATE (plate_leftovers)   -> GPIO27 to GND
  *   Status LED -> GPIO2 (on-board LED on most dev boards)
- *   Lid switch  -> GPIO33 to GND (reed switch + magnet, or micro switch). Set USE_LID_SWITCH 1.
- *   Bin lamp    -> GPIO32 -> logic-level MOSFET (e.g. IRLZ44N) -> white LED strip inside the bin
- *
- * Bin camera (see docs/camera-setup.md): the ESP32 only reports the lid; the laptop takes the photos.
- *   {"event":"lid","state":"open","ms":...}    -> laptop takes the BEFORE photo
- *   {"event":"lid","state":"closed","ms":...}  -> laptop takes the AFTER photo (lamp still on)
- *   The lamp is on while the lid is open and LAMP_AFTER_MS after it closes.
  *
  * Library: "HX711 Arduino Library" by Bogdan Necula (bogde) - Library Manager.
  *
@@ -38,10 +31,10 @@
  * Serial commands (send with newline):
  *   t        tare (tray must be empty)
  *   c500     calibrate with a known 500 g weight on the tray (any grams value)
+ *   f420.5   set a known calibration factor (from loadcell_check: "calibrated, factor ...")
  *   i        print calibration info
  *   z        reset event counter
- *   o / x    simulate lid open / closed (test the camera pipeline without a switch)
- *   L1 / L0  bin lamp forced on / back to automatic (aim and focus the camera)
+ *   k1/k2/k3 type key from the laptop (same as pressing button 1/2/3)
  */
 
 #include <Arduino.h>
@@ -55,14 +48,6 @@ const int PIN_BTN_PREP  = 25;
 const int PIN_BTN_SPOIL = 26;
 const int PIN_BTN_PLATE = 27;
 const int PIN_LED       = 2;
-const int PIN_LID       = 33;
-const int PIN_LAMP      = 32;
-
-// ---------------- Bin camera support ----------------
-#define USE_LID_SWITCH 0                  // 1 once the lid switch is wired (unwired pin would read "open")
-const int      LID_OPEN_LEVEL = HIGH;     // reed switch closed by the magnet on the shut lid -> LOW = shut
-const uint32_t LID_DEBOUNCE_MS = 80;
-const uint32_t LAMP_AFTER_MS   = 4000;    // keep the lamp on for the AFTER photo
 
 // ---------------- Tunables (tune tonight with real tests) ----------------
 const uint32_t SAMPLE_MS        = 100;    // 10 Hz
@@ -117,13 +102,6 @@ uint32_t    btnChangedAt[3] = {0, 0, 0};
 uint32_t lastSample = 0, lastStream = 0;
 float filtered = 0;
 bool overloadReported = false;
-
-// lid + lamp
-bool     lidOpen = false;
-bool     lidRaw = false;
-uint32_t lidChangedAt = 0;
-uint32_t lampUntil = 0;
-int      lampForced = -1;                 // -1 auto, 0 off, 1 on (serial L0 / L1)
 
 // LED feedback
 uint32_t ledUntil = 0;
@@ -189,25 +167,6 @@ void onButton(int t) {
   }
 }
 
-void setLid(bool open) {
-  if (open == lidOpen) return;
-  lidOpen = open;
-  uint32_t now = millis();
-  if (!open) lampUntil = now + LAMP_AFTER_MS;
-  Serial.printf("{\"event\":\"lid\",\"state\":\"%s\",\"ms\":%lu}\n", open ? "open" : "closed", (unsigned long)now);
-}
-
-void updateLid() {
-#if USE_LID_SWITCH
-  bool raw = digitalRead(PIN_LID) == LID_OPEN_LEVEL;
-  uint32_t now = millis();
-  if (raw != lidRaw) { lidRaw = raw; lidChangedAt = now; }
-  if (now - lidChangedAt >= LID_DEBOUNCE_MS) setLid(lidRaw);
-#endif
-  bool lamp = lampForced >= 0 ? lampForced == 1 : (lidOpen || millis() < lampUntil);
-  digitalWrite(PIN_LAMP, lamp ? HIGH : LOW);
-}
-
 void handleSerial() {
   if (!Serial.available()) return;
   String cmd = Serial.readStringUntil('\n');
@@ -228,16 +187,21 @@ void handleSerial() {
     saveCal();
     baseline = scale.get_units(10); winReset(); medCount = 0; state = IDLE;
     Serial.printf("{\"event\":\"info\",\"msg\":\"calibrated\",\"factor\":%.4f}\n", calFactor);
+  } else if (cmd.startsWith("f")) {
+    float f = cmd.substring(1).toFloat();   // factor from loadcell_check / calibrate (counts per gram)
+    if (f == 0) { Serial.println("{\"event\":\"info\",\"msg\":\"usage: f<factor>\"}"); return; }
+    calFactor = f;
+    scale.set_scale(calFactor);
+    saveCal();
+    baseline = scale.get_units(10); winReset(); medCount = 0; state = IDLE;
+    Serial.printf("{\"event\":\"info\",\"msg\":\"factor set\",\"factor\":%.4f}\n", calFactor);
   } else if (cmd == "i") {
     Serial.printf("{\"event\":\"info\",\"factor\":%.4f,\"offset\":%ld,\"baseline\":%.1f}\n", calFactor, hxOffset, baseline);
+  } else if (cmd == "k1" || cmd == "k2" || cmd == "k3") {
+    onButton(cmd.charAt(1) - '1');         // type key from the laptop/dashboard = virtual button press
   } else if (cmd == "z") {
     eventId = 0;
     Serial.println("{\"event\":\"info\",\"msg\":\"counter reset\"}");
-  } else if (cmd == "o" || cmd == "x") {
-    setLid(cmd == "o");
-  } else if (cmd == "L1" || cmd == "L0") {
-    lampForced = cmd == "L1" ? 1 : -1;
-    Serial.printf("{\"event\":\"info\",\"msg\":\"lamp %s\"}\n", cmd == "L1" ? "on" : "auto");
   }
 }
 
@@ -256,13 +220,6 @@ void setup() {
   Serial.setTimeout(50);
   for (int i = 0; i < 3; i++) pinMode(BTN_PINS[i], INPUT_PULLUP);
   pinMode(PIN_LED, OUTPUT);
-  pinMode(PIN_LAMP, OUTPUT);
-  digitalWrite(PIN_LAMP, LOW);
-#if USE_LID_SWITCH
-  pinMode(PIN_LID, INPUT_PULLUP);
-  lidRaw = digitalRead(PIN_LID) == LID_OPEN_LEVEL;
-  lidOpen = lidRaw;                       // no event for the state at boot
-#endif
 
   scale.begin(PIN_HX_DOUT, PIN_HX_SCK);
 
@@ -289,7 +246,6 @@ void setup() {
 void loop() {
   uint32_t now = millis();
   handleSerial();
-  updateLid();
 
   // Buttons: active low, 40 ms debounce, act on press edge
   for (int i = 0; i < 3; i++) {
@@ -362,8 +318,8 @@ void loop() {
   if (now - lastStream >= STREAM_MS) {
     lastStream = now;
     float m; bool st = winStable(&m);
-    Serial.printf("{\"event\":\"weight\",\"g\":%.1f,\"stable\":%d,\"state\":\"%s\",\"pending\":%d,\"lid\":%d}\n",
-                  filtered, st ? 1 : 0, state == IDLE ? "idle" : "moving", pendingActive ? 1 : 0, lidOpen ? 1 : 0);
+    Serial.printf("{\"event\":\"weight\",\"g\":%.1f,\"stable\":%d,\"state\":\"%s\",\"pending\":%d}\n",
+                  filtered, st ? 1 : 0, state == IDLE ? "idle" : "moving", pendingActive ? 1 : 0);
   }
 
   updateLed();
