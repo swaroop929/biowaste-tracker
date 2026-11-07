@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tray Cam Live</title>
+<style>
+  :root{
+    --bg:#0f1412; --panel:#18201c; --line:#26312b; --text:#eef3ef; --muted:#8fa197;
+    --green:#3ecf7a; --red:#ff5a4f; --amber:#ffb23e; --accent:#3ecf7a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  header{display:flex;align-items:center;gap:16px;padding:14px 24px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  header h1{font-size:20px;margin:0;font-weight:650;letter-spacing:.2px}
+  header h1 span{color:var(--accent)}
+  .pill{margin-left:auto;padding:6px 14px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:.5px;
+        background:#1f2a24;color:var(--green);border:1px solid currentColor;transition:all .2s}
+  .pill.MOVING{color:var(--red)} .pill.BUSY{color:var(--amber)} .pill.OFF{color:var(--muted)}
+  .count{color:var(--muted);font-size:14px}
+  button{background:#222d27;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:7px 12px;
+         font:inherit;font-size:14px;cursor:pointer}
+  button:hover{border-color:var(--accent)} button:disabled{opacity:.5;cursor:default}
+  main{display:grid;grid-template-columns:1.15fr 1fr;gap:20px;padding:20px 24px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}
+  .card h2{margin:0 0 12px;font-size:13px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);font-weight:600}
+  #live{width:100%;border-radius:10px;display:block;background:#000;aspect-ratio:4/3;object-fit:contain}
+  .motion{margin-top:8px;color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+  #last{display:flex;flex-direction:column;gap:12px}
+  .hero{display:flex;align-items:center;gap:18px}
+  .emoji{font-size:84px;line-height:1;width:96px;text-align:center}
+  .food{font-size:40px;font-weight:750;line-height:1.05;text-transform:capitalize;word-break:break-word}
+  .desc{color:var(--muted);font-size:17px;margin-top:4px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{padding:4px 10px;border-radius:8px;background:#222d27;color:var(--muted);font-size:13px}
+  .conf{height:10px;border-radius:6px;background:#222d27;overflow:hidden}
+  .conf>div{height:100%;background:var(--green);width:0;transition:width .5s}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .pair figure{margin:0} .pair img{width:100%;border-radius:8px;display:block;background:#000}
+  .pair figcaption{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+  .flash{animation:flash 1.2s ease-out}
+  @keyframes flash{0%{box-shadow:0 0 0 0 rgba(62,207,122,.7)}100%{box-shadow:0 0 0 22px rgba(62,207,122,0)}}
+  .wide{grid-column:1 / -1;display:grid;grid-template-columns:1fr 1.4fr;gap:20px}
+  .bars .row{display:grid;grid-template-columns:34px 1fr 1fr 56px;align-items:center;gap:10px;margin:7px 0}
+  .bars .e{font-size:24px;text-align:center}
+  .bars .n{text-transform:capitalize}
+  .bars .b{height:14px;border-radius:7px;background:#222d27;overflow:hidden}
+  .bars .b>div{height:100%;background:var(--accent)}
+  .bars .v{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-size:15px}
+  td,th{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+  th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:1px}
+  td img{height:44px;border-radius:6px;display:block}
+  td.f{text-transform:capitalize;font-weight:600}
+  .muted{color:var(--muted)}
+  .empty{color:var(--muted);padding:30px 0;text-align:center}
+  @media (max-width:900px){main,.wide{grid-template-columns:1fr}.food{font-size:32px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Bio Waste Tracker <span>· tray cam</span></h1>
+  <span class="count" id="count"></span>
+  <button id="btnBefore" title="Take the current picture as the new BEFORE (empty tray / bin)">New before</button>
+  <button id="btnSnap" title="Snap now and compare with BEFORE">Snap now</button>
+  <span class="pill OFF" id="pill">CONNECTING…</span>
+</header>
+
+<main>
+  <section class="card">
+    <h2>Camera · live</h2>
+    <img id="live" alt="live camera">
+    <div class="motion" id="motion"></div>
+  </section>
+
+  <section class="card" id="lastcard">
+    <h2>Last snap</h2>
+    <div id="last"><div class="empty">Waiting for the first snap…<br>Throw something in, take the hand away, wait 1 s.</div></div>
+  </section>
+
+  <div class="wide">
+    <section class="card">
+      <h2>Thrown away since start</h2>
+      <div class="bars" id="bars"><div class="empty">No data yet</div></div>
+    </section>
+    <section class="card">
+      <h2>History</h2>
+      <table><thead><tr><th>#</th><th>Time</th><th></th><th>Food</th><th>Conf.</th><th>Weight</th></tr></thead>
+        <tbody id="hist"></tbody></table>
+    </section>
+  </div>
+</main>
+
+<script>
+const EMOJI = {
+  apple:"🍎","green apple":"🍏",banana:"🍌",orange:"🍊",mandarin:"🍊",tangerine:"🍊",lemon:"🍋",pear:"🍐",grape:"🍇",
+  strawberry:"🍓",watermelon:"🍉",pineapple:"🍍",mango:"🥭",peach:"🍑",cherry:"🍒",kiwi:"🥝",coconut:"🥥",avocado:"🥑",
+  tomato:"🍅",cucumber:"🥒",carrot:"🥕",potato:"🥔",onion:"🧅",garlic:"🧄",broccoli:"🥦",lettuce:"🥬",salad:"🥗",
+  pepper:"🫑",corn:"🌽",mushroom:"🍄",eggplant:"🍆",
+  bread:"🍞",baguette:"🥖",croissant:"🥐",pretzel:"🥨",toast:"🍞",
+  rice:"🍚",pasta:"🍝",spaghetti:"🍝",noodles:"🍜",fries:"🍟",pizza:"🍕",burger:"🍔",sandwich:"🥪",
+  egg:"🥚",cheese:"🧀",meat:"🥩",steak:"🥩",chicken:"🍗",bacon:"🥓",sausage:"🌭",fish:"🐟",shrimp:"🍤",
+  cake:"🍰",cookie:"🍪",donut:"🍩",chocolate:"🍫",soup:"🍲",sauce:"🥫",milk:"🥛",yogurt:"🥛"
+};
+const CAT_EMOJI = {bread:"🍞",fries_potatoes:"🍟",rice_pasta:"🍝",salad_vegetables:"🥬",meat_fish:"🍗",
+  fruit_peels:"🍌",sauce_liquid:"🥫",dairy_cheese:"🧀",other:"🗑️"};
+function emoji(food, cat){
+  food=(food||"").toLowerCase().trim();
+  if(EMOJI[food]) return EMOJI[food];
+  for(const k of Object.keys(EMOJI)) if(food.includes(k)) return EMOJI[k];
+  return CAT_EMOJI[cat] || "🗑️";
+}
+const esc = s => String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pct = c => Math.round((+c||0)*100);
+const confColor = c => c>=.75?"var(--green)":c>=.45?"var(--amber)":"var(--red)";
+const img = f => "/img/" + encodeURIComponent(f||"");
+const isOffline = r => (r.description||"") === "offline mode";
+const isError = r => !isOffline(r) && (+r.confidence||0) === 0 && /error|no key/i.test(r.description||"");
+const isNothing = r => isOffline(r) || isError(r) || /none visible|nothing|unidentifiable/i.test(r.food||"");
+
+let lastN = -1;
+
+// live camera: fetch the next frame when the previous one arrived
+const live = document.getElementById("live");
+function nextFrame(){ live.src = "/live.jpg?t=" + Date.now(); }
+live.onload = () => setTimeout(nextFrame, 150);
+live.onerror = () => setTimeout(nextFrame, 1000);
+nextFrame();
+
+document.getElementById("btnBefore").onclick = async () => { await fetch("/rebase"); };
+document.getElementById("btnSnap").onclick = async (e) => {
+  e.target.disabled = true;
+  try{ await fetch("/snap"); } finally { e.target.disabled = false; }
+};
+
+async function status(){
+  try{
+    const s = await (await fetch("/status")).json();
+    const pill = document.getElementById("pill");
+    pill.className = "pill " + (s.busy ? "BUSY" : s.state);
+    pill.textContent = s.busy ? "ANALYSING…" : (s.state === "MOVING" ? "● MOVING" : "STILL · READY");
+    document.getElementById("count").textContent = s.snaps + " snaps" + (s.offline ? " · offline mode (AI off)" : "");
+    document.getElementById("motion").textContent = `motion ${(+s.motion).toFixed(3)}`;
+    document.getElementById("btnSnap").disabled = s.busy;
+    if(s.snaps !== lastN){ lastN = s.snaps; await history(); }
+  }catch(e){
+    const pill = document.getElementById("pill"); pill.className = "pill OFF"; pill.textContent = "NO CONNECTION";
+  }
+}
+
+function renderLast(r){
+  const c = +r.confidence || 0;
+  let hero;
+  if(isOffline(r)) hero = `<div class="emoji">✅</div><div><div class="food" style="text-transform:none">Change detected</div>
+      <div class="desc">Camera + trigger work. AI is off (--offline), so no food name.</div></div>`;
+  else if(isError(r)) hero = `<div class="emoji">⚠️</div><div><div class="food" style="text-transform:none">AI error</div>
+      <div class="desc">${esc(r.description)}</div></div>`;
+  else hero = `<div class="emoji">${emoji(r.food, r.item)}</div>
+      <div><div class="food">${esc(r.food || r.item)}</div><div class="desc">${esc(r.description)}</div></div>`;
+  document.getElementById("last").innerHTML = `
+    <div class="hero">${hero}</div>
+    ${isOffline(r) || isError(r) ? "" : `<div class="conf"><div style="width:${pct(c)}%;background:${confColor(c)}"></div></div>`}
+    <div class="chips">
+      ${isOffline(r) || isError(r) ? "" : `<span class="chip">${pct(c)}% sure</span>
+        <span class="chip">${esc((r.item||"").replace("_"," / "))}</span>`}
+      ${r.weight_g ? `<span class="chip">${esc(r.weight_g)} g</span>` : ""}
+      <span class="chip">#${esc(r.snap_no)} · ${esc((r.timestamp||"").slice(11,19))}</span>
+      <span class="chip">${esc(r.trigger)}${r.latency_s !== undefined ? " · " + esc(r.latency_s) + " s" : ""}</span>
+      ${r.region_found === false ? `<span class="chip" style="color:var(--amber)">no change found – whole picture sent</span>` : ""}
+    </div>
+    <div class="pair">
+      <figure><img src="${img(r.before)}" alt="before"><figcaption>Before</figcaption></figure>
+      <figure><img src="${img(r.full)}" alt="after with box"><figcaption>After · green box = new</figcaption></figure>
+    </div>`;
+  const card = document.getElementById("lastcard");
+  card.classList.remove("flash"); void card.offsetWidth; card.classList.add("flash");
+}
+
+function renderBars(rows){
+  const tot = {};
+  for(const r of rows){
+    if(isNothing(r)) continue;
+    const k = (r.food || r.item || "?").toLowerCase();
+    tot[k] = tot[k] || {n:0, g:0, item:r.item};
+    tot[k].n++; tot[k].g += parseFloat(r.weight_g) || 0;
+  }
+  const list = Object.entries(tot).sort((a,b) => (b[1].g-a[1].g) || (b[1].n-a[1].n)).slice(0,10);
+  if(!list.length){
+    const offN = rows.filter(isOffline).length;
+    document.getElementById("bars").innerHTML = offN
+      ? `<div class="empty">${offN} snaps in offline mode.<br>Food totals appear once the AI is on.</div>`
+      : '<div class="empty">No food recognised yet</div>';
+    return;
+  }
+  const useG = list.some(([,v]) => v.g > 0);
+  const max = Math.max(...list.map(([,v]) => useG ? v.g : v.n));
+  document.getElementById("bars").innerHTML = list.map(([k,v]) => {
+    const val = useG ? v.g : v.n;
+    return `<div class="row"><div class="e">${emoji(k, v.item)}</div><div class="n">${esc(k)}</div>
+      <div class="b"><div style="width:${100*val/max}%"></div></div>
+      <div class="v">${v.g > 0 ? Math.round(v.g) + " g" : v.n + "×"}</div></div>`;
+  }).join("");
+}
+
+function renderHist(rows){
+  document.getElementById("hist").innerHTML = rows.slice(0,25).map(r => `
+    <tr><td class="muted">${esc(r.snap_no)}</td><td class="muted">${esc((r.timestamp||"").slice(11,16))}</td>
+      <td><a href="${img(r.full)}" target="_blank"><img src="${img(r.image)}" loading="lazy" alt=""></a></td>
+      <td class="f">${isOffline(r) ? "✅ <span style='text-transform:none'>change (AI off)</span>"
+                      : isError(r) ? "⚠️ <span style='text-transform:none'>AI error</span>"
+                      : emoji(r.food, r.item) + " " + esc(r.food || r.item)}</td>
+      <td style="color:${isOffline(r) || isError(r) ? "var(--muted)" : confColor(+r.confidence)}">${isOffline(r) || isError(r) ? "–" : pct(r.confidence) + "%"}</td>
+      <td class="muted">${r.weight_g ? esc(r.weight_g) + " g" : "–"}</td></tr>`).join("");
+}
+
+// /history is newest first
+async function history(){
+  const rows = await (await fetch("/history")).json();
+  if(rows.length) renderLast(rows[0]);
+  renderBars(rows); renderHist(rows);
+}
+
+status(); setInterval(status, 400);
+</script>
+</body>
+</html>

@@ -19,6 +19,9 @@ py -3.12 tray_cam.py --camera http://PHONE_IP:8080/shot.jpg    # Android "IP Web
 py -3.12 tray_cam.py --camera 0                                # DroidCam / Iriun / USB
 #   add --events ..\server\data\events.csv to attach weights
 ```
+Dashboard: open http://localhost:8001/ (live camera, last snap with before/after, totals, history,
+buttons for "New before" and "Snap now"). From another device on the same network: http://PC_IP:8001/
+
 Keys: SPACE manual snap · b new before-frame · d motion numbers · q quit
 HTTP :8001 → `/status` `/last` `/history` `/snap?weight_g=` `/weight?weight_g=&record_no=&type=` `/img/<file>`
 

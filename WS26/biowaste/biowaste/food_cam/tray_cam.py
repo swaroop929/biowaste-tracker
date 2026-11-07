@@ -23,6 +23,7 @@ Run (Windows):
   add  --events ..\\server\\data\\events.csv   to attach weights from the scale
 
 Keys: SPACE = manual snap   b = new before-frame   d = show motion numbers   q = quit
+Dashboard: http://localhost:8001/   (live camera, last snap before/after, totals, history)
 HTTP: :8001/snap?weight_g=123  :8001/weight?weight_g=123  :8001/last  :8001/history  :8001/status  :8001/img/<file>
 
 Output: captures/food_log.csv  + captures/snap_XXX_{before,after,crop,full}.jpg
@@ -373,6 +374,11 @@ def start_http(fc, port):
             self.send_header("Access-Control-Allow-Origin", "*"); self.end_headers()
             self.wfile.write(b)
 
+        def send_bytes(self, b, ctype):
+            self.send_response(200); self.send_header("Content-Type", ctype)
+            self.send_header("Cache-Control", "no-store"); self.end_headers()
+            self.wfile.write(b)
+
         def do_GET(self):
             u = urlparse(self.path)
             q = parse_qs(u.query)
@@ -388,7 +394,14 @@ def start_http(fc, port):
             if u.path == "/history":
                 return self.send_json(list(fc.history))
             if u.path == "/status":
-                return self.send_json({"state": fc.state, "motion": round(fc.motion, 3), "busy": fc.busy, "snaps": fc.n})
+                return self.send_json({"state": fc.state, "motion": round(fc.motion, 3), "busy": fc.busy, "snaps": fc.n,
+                                       "offline": fc.offline})
+            if u.path in ("/", "/dashboard"):
+                return self.send_bytes((Path(__file__).with_name("tray_dashboard.html")).read_bytes(),
+                                       "text/html; charset=utf-8")
+            if u.path == "/live.jpg":
+                return self.send_bytes(cv2.imencode(".jpg", fc.cam.get(), [cv2.IMWRITE_JPEG_QUALITY, 70])[1].tobytes(),
+                                       "image/jpeg")
             if u.path.startswith("/img/"):
                 p = OUT / Path(u.path).name
                 if p.exists():
@@ -399,6 +412,7 @@ def start_http(fc, port):
         def log_message(self, *a): pass
     srv = ThreadingHTTPServer(("0.0.0.0", port), H)
     threading.Thread(target=srv.serve_forever, daemon=True).start()
+    print(f"Dashboard: http://localhost:{port}/")
     print(f"HTTP: http://localhost:{port}/status  /last  /history  /snap?weight_g=123  /weight?weight_g=123")
 
 # ------------------------------------------------------------------- main ----
