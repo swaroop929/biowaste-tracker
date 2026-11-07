@@ -16,6 +16,8 @@ No button press → the laptop applies a **time rule** and marks the record `con
 | GND | GND | | Spoiled stock | GPIO26 |
 | DT / DOUT | GPIO16 | | Plate leftovers | GPIO27 |
 | SCK | GPIO4 | | Status LED | GPIO2 (on-board) |
+| | | | Lid switch (bin camera) | GPIO33 |
+| | | | Bin lamp MOSFET gate (bin camera) | GPIO32 |
 
 Load cell → HX711: red E+, black E-, white A-, green A+ (if weight goes negative, swap A+/A-).
 
@@ -27,9 +29,15 @@ LED: **fast blink** = weighed, press a type · **short flash** = saved · **soli
 3. Close the serial monitor, then on the laptop: `pip install pyserial` and
    `python3 server/server.py --port /dev/ttyUSB0` (Windows `COM5`, macOS `/dev/cu.usbserial-*`).
 4. Open http://localhost:8000. Without hardware: `python3 server/server.py --simulate` (writes to `data_sim/`, never into the real log).
+5. Bin camera (which food went in): add `--camera 0` (USB webcam) or `--camera http://<phone-ip>:8080`
+   (IP Webcam app) to the server command. Lid opens → before photo; lid closes → after photo. Only the new
+   food is cut out and named with SigLIP 2, and the dashboard shows it per disposal. Without hardware:
+   `python3 server/server.py --simulate --camera replay`.
+   **Wiring, mounting, testing and knobs: [docs/camera-setup.md](docs/camera-setup.md).**
 
-Outputs: `server/data/events.csv` (D2: record_no, timestamp, weight_g, type, station_id, confidence, source) and
-`server/data/raw_log.jsonl` (every removal, ignored bump, unstable reading, overload – the honest log).
+Outputs: `server/data/events.csv` (D2: record_no, timestamp, weight_g, type, station_id, confidence, source),
+`server/data/raw_log.jsonl` (every removal, ignored bump, unstable reading, overload, lid event – the honest log)
+and, with the camera, `vision.jsonl` + `vision_links.csv` + photos in `vision/` (see the camera doc).
 
 ## Disposal detection (firmware)
 10 Hz → median of 5 → 1.2 s window. IDLE → weight leaves baseline by >12 g → MOVING → window flat (range ≤ 6 g)

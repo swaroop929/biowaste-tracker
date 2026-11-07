@@ -1,0 +1,27 @@
+# Foods the models are asked about for your own photos. One per line, lower case.
+# Keep it identical to FOODS in firmware/bin_tracker/vision.py (the live system's list).
+# capture.py can add new ones while you label - then add them to FOODS too.
+pasta
+rice
+bread
+potatoes
+potato peels
+apple
+apple peel or core
+banana peel
+orange peel
+onion skin
+carrot peels
+vegetable trimmings
+lettuce leaves
+cucumber
+tomato
+egg shells
+cooked meat
+chicken bones
+fish
+cheese
+sauce
+salad
+coffee grounds
+tea bag

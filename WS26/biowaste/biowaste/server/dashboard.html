@@ -59,6 +59,15 @@
   .log { font: 12px/1.5 ui-monospace, Menlo, Consolas, monospace; color: var(--text-secondary); max-height: 220px; overflow: auto; }
   .pill { font-size: 12px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border); color: var(--text-secondary); }
   a { color: var(--series-1); }
+  .foods { font-size: 13px; color: var(--text-secondary); margin-top: 4px; min-height: 1.2em; }
+  .food { font-size: 12px; color: var(--text-secondary); }
+  .pending { font-size: 12px; color: var(--text-muted); font-style: italic; }
+  .cam { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start; margin-top: 8px; }
+  .cam figure { margin: 0; }
+  .cam img { height: 150px; max-width: 100%; border-radius: 6px; border: 1px solid var(--border); display: block; background: var(--surface-0); }
+  .cam figcaption { font-size: 12px; color: var(--text-secondary); margin-top: 3px; max-width: 220px; }
+  .camfoods { font-size: 18px; font-weight: 600; margin: 4px 0 2px; }
+  .err { color: var(--warn); font-size: 12px; }
   .flash { animation: flash 1.2s ease-out; }
   @keyframes flash { from { background: var(--accent-bg); } to { background: transparent; } }
 </style>
@@ -84,16 +93,19 @@
       <div class="label"><span class="swatch" style="background:var(--series-1)"></span>Preparation waste</div>
       <div class="big"><span class="v">0</span> <span class="unit">g</span></div>
       <div class="share"><span class="p">0</span>% · <span class="n">0</span> disposals</div>
+      <div class="foods"></div>
     </div>
     <div class="card span-3 typecard" data-type="spoiled_stock">
       <div class="label"><span class="swatch" style="background:var(--series-2)"></span>Spoiled stock</div>
       <div class="big"><span class="v">0</span> <span class="unit">g</span></div>
       <div class="share"><span class="p">0</span>% · <span class="n">0</span> disposals</div>
+      <div class="foods"></div>
     </div>
     <div class="card span-3 typecard" data-type="plate_leftovers">
       <div class="label"><span class="swatch" style="background:var(--series-3)"></span>Plate leftovers</div>
       <div class="big"><span class="v">0</span> <span class="unit">g</span></div>
       <div class="share"><span class="p">0</span>% · <span class="n">0</span> disposals</div>
+      <div class="foods"></div>
     </div>
 
     <div class="card span-8 action">
@@ -119,8 +131,14 @@
     </div>
     <div class="card span-5">
       <div class="label">Latest disposals</div>
-      <table><thead><tr><th>#</th><th>Time</th><th class="num">Grams</th><th>Type</th><th>Source</th></tr></thead>
+      <table><thead><tr><th>#</th><th>Time</th><th class="num">Grams</th><th>Type</th><th>Foods (camera)</th><th>Source</th></tr></thead>
         <tbody id="recent"></tbody></table>
+    </div>
+
+    <div class="card span-12" id="camcard">
+      <div class="label">Bin camera – what went in last</div>
+      <div class="share" id="camstatus">–</div>
+      <div id="camlast"></div>
     </div>
 
     <div class="card span-12">
@@ -182,6 +200,34 @@ function drawHourly(rows) {
   });
 }
 
+const esc = s => String(s).replace(/[&<>"]/g, ch => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[ch]));
+
+function foodCell(e) {
+  if (e.vision === "pending") return '<span class="pending">recognising…</span>';
+  if (e.vision === "done") return e.foods && e.foods.length ? `<span class="food">${esc(e.foods.join(", "))}</span>` : '<span class="pending">unknown</span>';
+  return "";
+}
+
+let camShown = "";
+function drawCamera(v) {
+  const st = document.getElementById("camstatus"), box = document.getElementById("camlast");
+  if (!v.enabled) { st.textContent = "Camera off – start the server with --camera (see docs/camera-setup.md)."; box.innerHTML = ""; return; }
+  st.textContent = `${v.camera} · model ${v.model || "loading…"} · lid ${v.lid} · ${v.status}`;
+  const s = v.last;
+  if (!s) { box.innerHTML = '<div class="pending">No lid opening recognised yet.</div>'; return; }
+  const key = s.session + s.foods.join();
+  if (key === camShown) return;                       // keep images from reloading every second
+  camShown = key;
+  const img = (f, cap) => `<figure><img src="/vision/${esc(s.session)}/${esc(f)}" alt="${esc(cap)}" loading="lazy"><figcaption>${esc(cap)}</figcaption></figure>`;
+  box.innerHTML =
+    `<div class="camfoods">${s.foods.length ? esc(s.foods.join(", ")) : "nothing recognised"}</div>` +
+    `<div class="share">lid ${esc(s.opened.slice(11))}–${esc((s.closed || "").slice(11))}` +
+    `${s.ms ? ` · ${s.ms} ms` : ""}${s.truth ? ` · test photo, true answer: ${esc(s.truth.join(", "))}` : ""}</div>` +
+    (s.errors && s.errors.length ? `<div class="err">${esc(s.errors.join("; "))}</div>` : "") +
+    `<div class="cam">${img("before.jpg", "before (lid opened)")}${img("after.jpg", "after (lid closed)")}` +
+    s.parts.map((p, k) => img(p.image, `piece ${k + 1}: ${p.foods.join(", ") || "unknown"}`)).join("") + `</div>`;
+}
+
 async function refresh() {
   let d; try { d = await (await fetch("/api/state")).json(); } catch { document.getElementById("device").textContent = "server offline"; return; }
   document.getElementById("day").textContent = d.day;
@@ -192,9 +238,13 @@ async function refresh() {
   document.querySelectorAll(".typecard").forEach(c => { const t = c.dataset.type;
     c.querySelector(".v").textContent = fmt(d.totals_g[t]);
     c.querySelector(".p").textContent = d.shares_pct[t].toFixed(0);
-    c.querySelector(".n").textContent = d.counts[t]; });
+    c.querySelector(".n").textContent = d.counts[t];
+    const fb = (d.foods_by_type || {})[t];
+    c.querySelector(".foods").textContent = fb && fb.foods.length
+      ? "mostly " + fb.foods.slice(0, 3).map(f => `${f.food} ${f.pct.toFixed(0)}%`).join(" · ") : ""; });
   if (d.biggest) {
-    document.getElementById("insight").textContent = `${NAMES[d.biggest]}: ${d.shares_pct[d.biggest].toFixed(0)}% of today's waste (${fmt(d.totals_g[d.biggest])} g). ${d.insight}`;
+    document.getElementById("insight").textContent = `${NAMES[d.biggest]}: ${d.shares_pct[d.biggest].toFixed(0)}% of today's waste (${fmt(d.totals_g[d.biggest])} g). ${d.insight}` +
+      (d.food_insight ? " " + d.food_insight : "");
     document.getElementById("actiontext").textContent = d.action;
   }
   document.getElementById("split").innerHTML = TYPES.filter(t => d.shares_pct[t] > 0).map(t =>
@@ -206,13 +256,16 @@ async function refresh() {
   document.getElementById("recent").innerHTML = d.recent.map(e => `<tr class="${e.record_no > lastRecord && lastRecord ? "flash" : ""}">
     <td>${e.record_no}</td><td>${e.timestamp.slice(11)}</td><td class="num">${fmt(e.weight_g)}</td>
     <td><span class="swatch" style="background:${VAR[e.type]}"></span>${NAMES[e.type]}</td>
+    <td>${foodCell(e)}</td>
     <td>${e.source}${e.confidence === "low" ? ' <span class="low">low conf.</span>' : ""}</td></tr>`).join("");
   lastRecord = newest;
   const c = d.counters;
   document.getElementById("counters").innerHTML =
     `<span class="pill">tray emptied: ${c.removal}</span><span class="pill">bumps ignored: ${c.ignored}</span>` +
     `<span class="pill">unstable: ${c.unstable}</span><span class="pill">overload: ${c.overload}</span>` +
-    `<span class="pill">no button → time rule: ${c.unassigned}</span>`;
+    `<span class="pill">no button → time rule: ${c.unassigned}</span>` +
+    `<span class="pill">lid opened: ${c.lid_open || 0}</span>`;
+  drawCamera(d.vision || {enabled: false});
   document.getElementById("rawlog").innerHTML = d.raw_tail.map(r => `${r.ts.slice(11)}  ${JSON.stringify(r).replace(/^\{"ts":"[^"]+",/, "{")}`).join("<br>");
   drawHourly(d.hourly);
 }

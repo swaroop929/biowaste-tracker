@@ -1,0 +1,120 @@
+[
+ {
+  "id": "pair00_caddy_scraps",
+  "labels": [
+   "cooked meat",
+   "tomato"
+  ],
+  "items": [
+   "steak",
+   "tomato"
+  ],
+  "background": "caddy_scraps",
+  "dark": false
+ },
+ {
+  "id": "pair01_carrot_bowl_dark",
+  "labels": [
+   "onion skin"
+  ],
+  "items": [
+   "onion skin"
+  ],
+  "background": "carrot_bowl",
+  "dark": true
+ },
+ {
+  "id": "pair02_peel_pile",
+  "labels": [
+   "onion skin"
+  ],
+  "items": [
+   "onion skin"
+  ],
+  "background": "peel_pile",
+  "dark": false
+ },
+ {
+  "id": "pair03_bin_scraps_dark",
+  "labels": [
+   "fish",
+   "rice"
+  ],
+  "items": [
+   "rice",
+   "fish"
+  ],
+  "background": "bin_scraps",
+  "dark": true
+ },
+ {
+  "id": "pair04_caddy_scraps",
+  "labels": [
+   "potatoes"
+  ],
+  "items": [
+   "potato"
+  ],
+  "background": "caddy_scraps",
+  "dark": false
+ },
+ {
+  "id": "pair05_carrot_bowl_dark",
+  "labels": [
+   "potatoes"
+  ],
+  "items": [
+   "potato"
+  ],
+  "background": "carrot_bowl",
+  "dark": true
+ },
+ {
+  "id": "pair06_peel_pile",
+  "labels": [
+   "rice",
+   "tomato"
+  ],
+  "items": [
+   "tomato",
+   "rice"
+  ],
+  "background": "peel_pile",
+  "dark": false
+ },
+ {
+  "id": "pair07_bin_scraps_dark",
+  "labels": [
+   "potatoes"
+  ],
+  "items": [
+   "potato"
+  ],
+  "background": "bin_scraps",
+  "dark": true
+ },
+ {
+  "id": "pair08_caddy_scraps",
+  "labels": [
+   "apple"
+  ],
+  "items": [
+   "apple"
+  ],
+  "background": "caddy_scraps",
+  "dark": false
+ },
+ {
+  "id": "pair09_carrot_bowl_dark",
+  "labels": [
+   "cooked meat",
+   "cucumber"
+  ],
+  "items": [
+   "cucumber",
+   "chicken duck"
+  ],
+  "background": "carrot_bowl",
+  "dark": true
+ }
+]

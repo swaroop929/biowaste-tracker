@@ -134,10 +134,65 @@ def _small(img, w=320):
     return np.asarray(img.convert("RGB").resize((w, h)), dtype=np.int16)
 
 
+ROI_FILE = os.path.join(HERE, "roi.json")
+ROI = None             # (x0, y0, x1, y1) as fractions of the frame; only this area is analysed
+
+
+def load_roi():
+    global ROI
+    if os.path.exists(ROI_FILE):
+        import json
+        ROI = tuple(json.load(open(ROI_FILE)))
+        print(f"area of interest: {ROI}")
+
+
+def save_roi(roi):
+    import json
+    global ROI
+    ROI = roi
+    if roi is None:
+        if os.path.exists(ROI_FILE):
+            os.remove(ROI_FILE)
+    else:
+        json.dump([round(v, 3) for v in roi], open(ROI_FILE, "w"))
+
+
+def _roi_mask(h, w):
+    m = np.zeros((h, w), bool)
+    if ROI is None:
+        m[:] = True
+    else:
+        x0, y0, x1, y1 = ROI
+        m[int(y0 * h):int(np.ceil(y1 * h)), int(x0 * w):int(np.ceil(x1 * w))] = True
+    return m
+
+
 def _changed_mask(a, b):
-    """Per-pixel change, using the colour channel that changed most - pale items on white
-    (cut apple, bread, rice) differ in colour more than in brightness."""
-    return np.abs(_small(a) - _small(b)).max(axis=2) > PIX_THRESH
+    """Per-pixel change inside the area of interest.
+    - strongest colour channel: pale items on white (cut apple, bread, rice) differ in colour more than brightness
+    - the median shift is subtracted first: the phone's auto-exposure / white balance changing between
+      shots moves ALL pixels a bit - that is not a new item."""
+    A = _small(a)
+    B = _small(b.resize(a.size) if a.size != b.size else b)
+    d = B - A
+    roi = _roi_mask(*d.shape[:2])
+    shift = np.median(d[roi], axis=0)
+    return (np.abs(d - shift).max(axis=2) > PIX_THRESH) & roi
+
+
+def auto_roi(frame, pad=0.06):
+    """Find the white paper / bag (largest bright, colourless area) -> area of interest."""
+    A = _small(frame)
+    grey, sat = A.mean(axis=2), A.max(axis=2) - A.min(axis=2)
+    lab, blobs = _label((grey > 140) & (sat < 45))
+    if not blobs:
+        return None
+    x0, y0, x1, y1, area = max(blobs, key=lambda b: b[4])
+    h, w = grey.shape
+    if area < 0.03 * h * w:
+        return None
+    return (float(max(0.0, x0 / w - pad)), float(max(0.0, y0 / h - pad)),
+            float(min(1.0, (x1 + 1) / w + pad)), float(min(1.0, (y1 + 1) / h + pad)))
 
 
 def diff_pct(a, b):
@@ -159,7 +214,7 @@ def changed_region(before, after, pad=20):
             min(after.width, int(x1 * sx) + pad), min(after.height, int(y1 * sy) + pad))
 
 
-MIN_BLOB_PCT = 0.15    # blobs smaller than this % of the image are noise / pile settling
+MIN_BLOB_PCT = 0.08    # blobs smaller than this % of the image are noise / pile settling
 MERGE_PX = 4           # pixels (at 320 px width) to grow blobs so pieces of one item join up
 
 
@@ -172,15 +227,17 @@ def _shift_or(m, r):
     return out
 
 
-def _blobs(mask):
-    """Connected components (4-neighbour) of a boolean mask -> list of (x0, y0, x1, y1, area)."""
+def _label(mask):
+    """Connected components (4-neighbour) -> (label image, list of (x0, y0, x1, y1, area)); label k+1 = blob k."""
     h, w = mask.shape
-    seen = np.zeros_like(mask)
+    lab = np.zeros((h, w), np.int32)
     out = []
     for y, x in zip(*np.nonzero(mask)):
-        if seen[y, x]:
+        if lab[y, x]:
             continue
-        stack, seen[y, x] = [(y, x)], True
+        k = len(out) + 1
+        stack = [(y, x)]
+        lab[y, x] = k
         x0 = x1 = x
         y0 = y1 = y
         area = 0
@@ -189,29 +246,42 @@ def _blobs(mask):
             area += 1
             x0, x1, y0, y1 = min(x0, cx), max(x1, cx), min(y0, cy), max(y1, cy)
             for ny, nx in ((cy + 1, cx), (cy - 1, cx), (cy, cx + 1), (cy, cx - 1)):
-                if 0 <= ny < h and 0 <= nx < w and mask[ny, nx] and not seen[ny, nx]:
-                    seen[ny, nx] = True
+                if 0 <= ny < h and 0 <= nx < w and mask[ny, nx] and not lab[ny, nx]:
+                    lab[ny, nx] = k
                     stack.append((ny, nx))
         out.append((x0, y0, x1, y1, area))
-    return out
+    return lab, out
 
 
 def changed_items(before, after, pad=12):
-    """Separate boxes (full-res) for each new thing on the tray, noise removed."""
+    """One (box, mask) per new thing, largest first. box = full-res crop box,
+    mask = full-res 'L' image (255 = belongs to this item) used to white out everything else."""
+    from PIL import ImageFilter
     raw = _changed_mask(before, after)
     clean = ~_shift_or(~raw, 1)                 # erode: drop single-pixel speckle
     grown = _shift_or(clean, MERGE_PX)          # dilate: join pieces of one item
     h, w = raw.shape
     min_area = MIN_BLOB_PCT / 100.0 * h * w
     sx, sy = after.width / w, after.height / h
-    boxes = []
-    for x0, y0, x1, y1, area in _blobs(grown):
-        real = clean[y0:y1 + 1, x0:x1 + 1].sum()  # area before growing
+    lab, blobs = _label(grown)
+    items = []
+    for k, (x0, y0, x1, y1, area) in enumerate(blobs, start=1):
+        real = int((clean & (lab == k)).sum())  # area before growing
         if real < min_area:
             continue
-        boxes.append((max(0, int(x0 * sx) - pad), max(0, int(y0 * sy) - pad),
-                      min(after.width, int((x1 + 1) * sx) + pad), min(after.height, int((y1 + 1) * sy) + pad)))
-    return boxes
+        box = (max(0, int(x0 * sx) - pad), max(0, int(y0 * sy) - pad),
+               min(after.width, int((x1 + 1) * sx) + pad), min(after.height, int((y1 + 1) * sy) + pad))
+        m = Image.fromarray(((lab == k) * 255).astype(np.uint8)).resize(after.size, Image.NEAREST)
+        m = m.filter(ImageFilter.MaxFilter(9))  # a little margin around the item
+        items.append((real, box, m))
+    items.sort(key=lambda t: -t[0])
+    return [(box, m) for _, box, m in items]
+
+
+def cutout(frame, box, mask):
+    """Crop to box and paint everything that is not this item white (neighbours can't leak in)."""
+    crop = frame.crop(box)
+    return Image.composite(crop, Image.new("RGB", crop.size, (255, 255, 255)), mask.crop(box))
 
 
 def _forward(img):
@@ -275,14 +345,15 @@ def recognise(frames, reference, save=True):
 
 def recognise_items(frames, reference, save=True):
     """One result per new item. Same-food blobs (scattered pasta) are merged into one item."""
-    boxes = changed_items(reference, frames[-1])
+    parts = changed_items(reference, frames[-1])
     stamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]
     found = []
-    for i, box in enumerate(boxes):
-        probs = [class_probs(f.crop(box)) for f in frames]
+    for box, mask in parts:
+        crops = [cutout(f, box, mask) for f in frames]
+        probs = [class_probs(c) for c in crops]
         avg = {k: sum(p[k] for p in probs) / len(probs) for k in FOODS}
         food, conf, top3 = decide(avg)
-        found.append({"food": food, "food_conf": round(conf, 2), "top3": top3, "box": box})
+        found.append({"food": food, "food_conf": round(conf, 2), "top3": top3, "box": box, "crop": crops[-1]})
     merged = {}
     for r in found:
         m = merged.get(r["food"])
@@ -290,7 +361,8 @@ def recognise_items(frames, reference, save=True):
             merged[r["food"]] = dict(r, boxes=[r["box"]])
         else:
             m["boxes"].append(r["box"])
-            m["food_conf"] = max(m["food_conf"], r["food_conf"])
+            if r["food_conf"] > m["food_conf"]:
+                m["food_conf"], m["crop"] = r["food_conf"], r["crop"]
             b = m["box"]
             m["box"] = (min(b[0], r["box"][0]), min(b[1], r["box"][1]), max(b[2], r["box"][2]), max(b[3], r["box"][3]))
     items = list(merged.values())
@@ -299,7 +371,7 @@ def recognise_items(frames, reference, save=True):
         for i, r in enumerate(items):
             r["image_id"] = "" if r["food"] == "empty" else f"{stamp}_{i}.jpg"
             if r["image_id"]:
-                frames[-1].crop(r["box"]).save(os.path.join(CROPS, r["image_id"]), quality=80)
+                r["crop"].save(os.path.join(CROPS, r["image_id"]), quality=90)   # the cut-out the model saw
     return items
 
 
@@ -310,6 +382,9 @@ def annotate(frame, items):
     from PIL import ImageDraw
     img = frame.copy()
     d = ImageDraw.Draw(img)
+    if ROI is not None:
+        W, H = img.size
+        d.rectangle((ROI[0] * W, ROI[1] * H, ROI[2] * W, ROI[3] * H), outline=(60, 120, 230), width=2)
     for r in items:
         c = COLORS.get(r["food"], (20, 160, 90))
         for b in r.get("boxes", [r["box"]]):
@@ -337,14 +412,14 @@ def show(r, ms):
 
 
 def teach_save(label, frame, ref):
-    box = changed_region(ref, frame)
-    if not box:
+    parts = changed_items(ref, frame)
+    if not parts:
         print("  (nothing new to save)")
         return
     folder = os.path.join(REFS, label)
     os.makedirs(folder, exist_ok=True)
     fn = datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3] + ".jpg"
-    frame.crop(box).save(os.path.join(folder, fn), quality=90)
+    cutout(frame, *parts[0]).save(os.path.join(folder, fn), quality=90)
     n = len([x for x in os.listdir(folder) if x.endswith(".jpg")])
     print(f"  saved reference #{n} for '{label}'  ({fn}) - next one, or Ctrl+C when you have 5-10")
 
@@ -354,7 +429,7 @@ _view = {"jpg": b"", "events": []}
 
 def set_view(frame, items=None, note=None):
     buf = io.BytesIO()
-    (annotate(frame, items) if items else frame).save(buf, "JPEG", quality=80)
+    annotate(frame, items or []).save(buf, "JPEG", quality=80)
     _view["jpg"] = buf.getvalue()
     if note:
         _view["events"] = ([{"t": datetime.now().strftime("%H:%M:%S"), "msg": note}] + _view["events"])[:15]
@@ -453,28 +528,22 @@ def snapshot_retry(phone):
             time.sleep(2)
 
 
-def save_debug(frame, box, label):
-    """vision/last.jpg = latest frame with a box around what was detected (overwritten each time)."""
-    from PIL import ImageDraw
-    img = frame.copy()
-    if box:
-        d = ImageDraw.Draw(img)
-        d.rectangle(box, outline=(255, 0, 0), width=4)
-        d.text((box[0] + 6, max(0, box[1] - 14)), label, fill=(255, 0, 0))
-    img.save(os.path.join(HERE, "last.jpg"), quality=80)
-
-
 def manual(phone):
     print("""
 KEY-PRESS mode - one picture per disposal, compared with the previous picture.
-  Enter            throw something in, hand out of view, then press Enter -> what was added
-  r + Enter        take a new reference (tray emptied / bag changed / camera moved)
-  c apple + Enter  last result was wrong, it was 'apple' -> saved as reference photo, used from now on
-  q + Enter        quit
-Open vision/last.jpg to see what was detected (red box).""")
+  Enter              throw something in, hand out of view, then press Enter -> what was added
+  r                  new reference (tray emptied / bag changed / camera moved)
+  roi                find the white paper and only look there (ignores walls + reflections) - do this first
+  roi off            look at the whole picture again
+  c apple            last result was wrong, it was 'apple' -> its cut-out becomes a reference photo
+  c 2 apple          same, for the 2nd item of the last result
+  q                  quit
+vision/last.jpg (and the live view) shows each detected item with a box; blue = area of interest.""")
     ref = snapshot_retry(phone)
-    print("Reference taken. Ready.")
-    last_crop = None
+    set_view(ref)
+    annotate(ref, []).save(os.path.join(HERE, "last.jpg"), quality=80)
+    print("Reference taken. Ready." + ("" if ROI else "  Tip: type 'roi' with an empty tray first."))
+    last_items = []
     n = 0
     while True:
         cmd = input("> ").strip().lower()
@@ -482,42 +551,67 @@ Open vision/last.jpg to see what was detected (red box).""")
             break
         if cmd == "r":
             ref = snapshot_retry(phone)
+            set_view(ref, note="new reference")
             print("  new reference taken")
             continue
+        if cmd == "roi off":
+            save_roi(None)
+            print("  looking at the whole picture")
+            continue
+        if cmd == "roi":
+            f = snapshot_retry(phone)
+            roi = auto_roi(f)
+            if roi is None:
+                print("  couldn't find the white paper - is the tray empty and lit?")
+            else:
+                save_roi(roi)
+                annotate(f, []).save(os.path.join(HERE, "last.jpg"), quality=80)
+                set_view(f, note="area of interest set")
+                print(f"  area of interest set {tuple(round(v, 2) for v in roi)} - check the blue box in last.jpg")
+                ref = f
+            continue
         if cmd.startswith("c "):
-            label = cmd[2:].strip()
+            parts = cmd.split()
+            idx = int(parts[1]) - 1 if len(parts) == 3 and parts[1].isdigit() else 0
+            label = parts[-1]
             if label not in FOODS:
                 print(f"  unknown label. Labels: {', '.join(FOODS)}")
-            elif not last_crop:
-                print("  nothing to correct yet")
+            elif not 0 <= idx < len(last_items):
+                print("  nothing to correct")
             else:
                 folder = os.path.join(REFS, label)
                 os.makedirs(folder, exist_ok=True)
-                Image.open(last_crop).save(os.path.join(folder, os.path.basename(last_crop)), quality=90)
+                last_items[idx]["crop"].save(os.path.join(folder, last_items[idx]["image_id"] or "corr.jpg"), quality=90)
                 load_refs()
                 print(f"  saved as reference for '{label}' - used from the next item on")
             continue
         if cmd:
-            print("  unknown command (Enter / r / c <label> / q)")
+            print("  unknown command (Enter / r / roi / c <label> / q)")
             continue
         frames = [snapshot_retry(phone) for _ in range(BURST)]
         changed = diff_pct(ref, frames[-1])
         if changed < CHANGE_PCT:
             print(f"  nothing new compared with the last picture ({changed:.1f}% changed)")
+            set_view(frames[-1])
             continue
         t = time.time()
-        r = recognise(frames, ref)
-        save_debug(frames[-1], r["box"], f"{r['food']} {r['food_conf']:.0%}")
-        if r["food"] == "empty":
-            print("  tray looks empty now -> new reference (tray was emptied)")
-            r["image_id"] = ""
-            last_crop = None
+        items = recognise_items(frames, ref)
+        ms = 1000 * (time.time() - t)
+        annotate(frames[-1], items).save(os.path.join(HERE, "last.jpg"), quality=80)
+        food_items = [r for r in items if r["food"] != "empty"]
+        if not items:
+            print("  change too small / only noise")
+        elif not food_items:
+            print("  tray looks emptied -> new reference")
         else:
             n += 1
-            print(f"  #{n}", end="")
-            show(r, 1000 * (time.time() - t))
-            last_crop = os.path.join(CROPS, r["image_id"])
-        log(r, changed)
+            for i, r in enumerate(food_items):
+                print(f"  #{n}{'abcdefgh'[i] if len(food_items) > 1 else ''}", end="")
+                show(r, ms)
+        for r in items:
+            log(r, changed)
+        set_view(frames[-1], items, ", ".join(f"{r['food']} {r['food_conf']:.0%}" for r in food_items) or None)
+        last_items = food_items
         ref = frames[-1]          # this picture is the "before" for the next disposal
 
 
@@ -538,6 +632,7 @@ def main():
         BURST = a.burst
     print("loading model (first run downloads ~600 MB)...")
     load_model()
+    load_roi()
     if a.image:
         img = Image.open(a.image).convert("RGB")
         t = time.time()

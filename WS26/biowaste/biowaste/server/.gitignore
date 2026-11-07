@@ -1,0 +1,3 @@
+__pycache__/
+# simulator output, never part of the real D2 log
+data_sim/

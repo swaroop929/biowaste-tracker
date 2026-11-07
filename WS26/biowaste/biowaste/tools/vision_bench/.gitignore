@@ -1,0 +1,6 @@
+__pycache__/
+# raw per-image scores are large and regenerate with `python bench.py run`
+results/raw*/
+binpairs/backgrounds/
+binpairs/items/
+results/*.log
