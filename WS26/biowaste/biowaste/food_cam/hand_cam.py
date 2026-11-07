@@ -158,7 +158,7 @@ def classify(before, hand_frames, after_crop, offline=False):
                                             "data": jpg_b64(im, 512 if i == 0 else 768)}}
                for i, im in enumerate(imgs)]
     content.append({"type": "text", "text": PROMPT})
-    body = {"model": MODEL, "max_tokens": 200, "messages": [{"role": "user", "content": content}]}
+    body = {"model": MODEL, "max_tokens": 1024, "messages": [{"role": "user", "content": content}]}
     req = urllib.request.Request(
         f"{API_BASE}/v1/messages", data=json.dumps(body).encode(),
         headers={**auth, "anthropic-version": "2023-06-01", "content-type": "application/json",
@@ -166,7 +166,7 @@ def classify(before, hand_frames, after_crop, offline=False):
                      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) food-cam/1.0")})
     try:
         with urllib.request.urlopen(req, timeout=40) as r:
-            text = json.loads(r.read())["content"][0]["text"]
+            text = next(c["text"] for c in json.loads(r.read())["content"] if c.get("type") == "text")  # skip thinking blocks
         res = json.loads(text[text.find("{"): text.rfind("}") + 1])
         if res.get("item") not in FOOD_CLASSES:
             res["item"] = "other"

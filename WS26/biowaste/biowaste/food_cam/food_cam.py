@@ -95,7 +95,7 @@ def classify(before, after_crop, offline=False):
         return {"item": "other", "confidence": 0.0, "description": "no ANTHROPIC_API_KEY set"}
     body = {
         "model": MODEL,
-        "max_tokens": 150,
+        "max_tokens": 1024,
         "messages": [{"role": "user", "content": [
             {"type": "image", "source": {"type": "base64", "media_type": "image/jpeg", "data": jpg_b64(before, 512)}},
             {"type": "image", "source": {"type": "base64", "media_type": "image/jpeg", "data": jpg_b64(after_crop)}},
@@ -109,7 +109,7 @@ def classify(before, after_crop, offline=False):
     )
     try:
         with urllib.request.urlopen(req, timeout=30) as r:
-            text = json.loads(r.read())["content"][0]["text"]
+            text = next(c["text"] for c in json.loads(r.read())["content"] if c.get("type") == "text")  # skip thinking blocks
         text = text[text.find("{"): text.rfind("}") + 1]
         res = json.loads(text)
         if res.get("item") not in FOOD_CLASSES:
