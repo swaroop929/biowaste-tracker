@@ -1,0 +1,39 @@
+{
+  "restaurant": "Demo Kitchen Reutlingen (pitch)",
+  "note": "Only the items used in the pitch demo - matches the organisers' test food (apples, dry pasta, bread) plus orange and banana. non_food and empty are added automatically.",
+  "items": {
+    "apple": [
+      "a photo of an apple",
+      "a photo of apple pieces",
+      "a photo of an apple core",
+      "a photo of apple slices with white flesh and red skin",
+      "a photo of apple wedges",
+      "a photo of half an apple cut open",
+      "a photo of browned apple pieces"
+    ],
+    "orange": [
+      "a photo of an orange",
+      "a photo of orange peel",
+      "a photo of orange slices",
+      "a photo of orange peel pieces with white inside"
+    ],
+    "banana": [
+      "a photo of a banana",
+      "a photo of a banana peel"
+    ],
+    "pasta": [
+      "a photo of dry uncooked pasta",
+      "a photo of penne or fusilli pasta",
+      "a photo of cooked spaghetti",
+      "a photo of cooked pasta with sauce",
+      "a photo of a handful of yellow dry pasta pieces"
+    ],
+    "bread": [
+      "a photo of bread slices",
+      "a photo of a bread roll",
+      "a photo of bread crust",
+      "a photo of a piece of baguette",
+      "a photo of a torn piece of bread with crust"
+    ]
+  }
+}
