@@ -1,0 +1,27 @@
+{"ts": "2026-11-07T12:57:46", "event": "camera_reference"}
+{"ts": "2026-11-07T12:57:54", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:57:54", "event": "preselect", "type": "plate_leftovers", "ms": 17909}
+{"ts": "2026-11-07T12:58:01", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:58:01", "event": "preselect", "type": "plate_leftovers", "ms": 24396}
+{"ts": "2026-11-07T12:58:01", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:58:01", "event": "preselect", "type": "plate_leftovers", "ms": 25284}
+{"ts": "2026-11-07T12:58:24", "event": "info", "msg": "boot", "factor": 427.9784, "restored": 1, "baseline": -0.1}
+{"ts": "2026-11-07T12:58:26", "event": "removal", "delta_g": -12.7, "g": -12.9, "ms": 5199}
+{"ts": "2026-11-07T12:58:27", "event": "camera_reference"}
+{"ts": "2026-11-07T12:58:49", "event": "camera_reference"}
+{"ts": "2026-11-07T12:59:04", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:59:04", "event": "preselect", "type": "plate_leftovers", "ms": 42772}
+{"ts": "2026-11-07T12:59:08", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:59:08", "event": "preselect", "type": "plate_leftovers", "ms": 46389}
+{"ts": "2026-11-07T12:59:08", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:59:08", "event": "preselect", "type": "spoiled_stock", "ms": 46961}
+{"ts": "2026-11-07T12:59:09", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T12:59:09", "event": "preselect", "type": "preparation_waste", "ms": 47488}
+{"ts": "2026-11-07T12:59:09", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:59:09", "event": "preselect", "type": "spoiled_stock", "ms": 47987}
+{"ts": "2026-11-07T12:59:10", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:59:10", "event": "preselect", "type": "plate_leftovers", "ms": 48485}
+{"ts": "2026-11-07T12:59:17", "event": "disposal", "id": 1, "weight_g": 25.1, "type": "plate_leftovers", "source": "button_pre", "ms": 55299}
+{"ts": "2026-11-07T12:59:19", "event": "camera", "items": [["broccoli", 1.0], ["bread", 0.89]]}
+{"ts": "2026-11-07T12:59:40", "event": "removal", "delta_g": -23.3, "g": -12.5, "ms": 78599}
+{"ts": "2026-11-07T12:59:40", "event": "camera_reference"}

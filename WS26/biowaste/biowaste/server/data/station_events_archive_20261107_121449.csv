@@ -1,0 +1,2 @@
+record_no,timestamp,weight_g,type,station_id,confidence,source,food,food_conf,image_id,device_event_id
+1,2026-11-07T12:14:20,42.1,plate_leftovers,bin-1,high,button,banana+unknown+cherry_tomato,0.5,20261107_121415_356_0.jpg,1

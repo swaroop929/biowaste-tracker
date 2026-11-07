@@ -1,0 +1,10 @@
+record_no,timestamp,weight_g,type,station_id,confidence,source,food,food_conf,image_id,device_event_id
+1,2026-11-07T12:23:27,22.5,spoiled_stock,bin-1,high,button,cherry_tomato,0.99,20261107_122325_564_0.jpg,11
+2,2026-11-07T12:23:52,51.2,spoiled_stock,bin-1,high,button,green_grapes,0.7,20261107_122346_225_0.jpg,12
+3,2026-11-07T12:24:19,32.7,plate_leftovers,bin-1,high,key,apple+cherry_tomato,0.84,20261107_122410_466_0.jpg,13
+4,2026-11-07T12:25:03,31.7,preparation_waste,bin-1,high,button_pre,bread+orange,0.97,20261107_122502_083_0.jpg,14
+5,2026-11-07T12:25:28,137.1,spoiled_stock,bin-1,high,button,bread,0.9,20261107_122522_762_0.jpg,15
+6,2026-11-07T12:25:47,151.5,plate_leftovers,bin-1,high,button,banana,0.84,20261107_122543_749_0.jpg,16
+7,2026-11-07T12:26:08,36.6,preparation_waste,bin-1,high,button,banana,0.97,20261107_122604_748_0.jpg,17
+8,2026-11-07T12:26:26,35.1,plate_leftovers,bin-1,high,button,apple,0.76,20261107_122622_240_0.jpg,18
+9,2026-11-07T12:26:43,57.1,preparation_waste,bin-1,high,button,banana,0.98,20261107_122641_771_0.jpg,19

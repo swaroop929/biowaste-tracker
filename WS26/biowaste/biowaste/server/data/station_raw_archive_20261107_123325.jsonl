@@ -1,0 +1,95 @@
+{"ts": "2026-11-07T12:20:43", "event": "camera_reference"}
+{"ts": "2026-11-07T12:21:16", "event": "removal", "delta_g": -96.6, "g": 219.0, "ms": 329330}
+{"ts": "2026-11-07T12:21:16", "event": "camera_reference"}
+{"ts": "2026-11-07T12:21:20", "event": "removal", "delta_g": -17.6, "g": 201.8, "ms": 333930}
+{"ts": "2026-11-07T12:21:21", "event": "camera_reference"}
+{"ts": "2026-11-07T12:21:28", "event": "removal", "delta_g": -15.5, "g": 184.2, "ms": 341830}
+{"ts": "2026-11-07T12:21:28", "event": "camera_reference"}
+{"ts": "2026-11-07T12:21:30", "event": "removal", "delta_g": -67.7, "g": 116.6, "ms": 343730}
+{"ts": "2026-11-07T12:21:30", "event": "camera_reference"}
+{"ts": "2026-11-07T12:21:32", "event": "removal", "delta_g": -15.5, "g": 100.9, "ms": 345630}
+{"ts": "2026-11-07T12:21:32", "event": "camera_reference"}
+{"ts": "2026-11-07T12:21:39", "event": "removal", "delta_g": -40.8, "g": 58.9, "ms": 352730}
+{"ts": "2026-11-07T12:21:39", "event": "camera_reference"}
+{"ts": "2026-11-07T12:21:44", "event": "removal", "delta_g": -20.6, "g": 37.7, "ms": 357330}
+{"ts": "2026-11-07T12:21:44", "event": "camera_reference"}
+{"ts": "2026-11-07T12:23:27", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:23:27", "event": "disposal", "id": 11, "weight_g": 22.5, "type": "spoiled_stock", "source": "button", "ms": 460141}
+{"ts": "2026-11-07T12:23:27", "event": "camera", "items": [["cherry_tomato", 0.99]]}
+{"ts": "2026-11-07T12:23:47", "event": "camera", "items": [["green_grapes", 0.7]]}
+{"ts": "2026-11-07T12:23:52", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:23:52", "event": "disposal", "id": 12, "weight_g": 51.2, "type": "spoiled_stock", "source": "button", "ms": 484990}
+{"ts": "2026-11-07T12:24:12", "event": "camera", "items": [["apple", 0.84], ["empty", 0.9], ["cherry_tomato", 0.99]]}
+{"ts": "2026-11-07T12:24:17", "event": "disposal", "id": 13, "weight_g": 32.7, "type": "unassigned", "source": "none", "ms": 510631}
+{"ts": "2026-11-07T12:24:19", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:24:19", "event": "preselect", "type": "plate_leftovers", "ms": 512744}
+{"ts": "2026-11-07T12:24:39", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T12:24:39", "event": "preselect", "type": "preparation_waste", "ms": 532469}
+{"ts": "2026-11-07T12:24:43", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T12:24:43", "event": "preselect", "type": "preparation_waste", "ms": 536380}
+{"ts": "2026-11-07T12:24:48", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T12:24:48", "event": "preselect", "type": "preparation_waste", "ms": 541675}
+{"ts": "2026-11-07T12:24:51", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T12:24:51", "event": "preselect", "type": "preparation_waste", "ms": 543980}
+{"ts": "2026-11-07T12:25:01", "event": "disposal", "id": 14, "weight_g": 31.7, "type": "preparation_waste", "source": "button_pre", "ms": 554630}
+{"ts": "2026-11-07T12:25:03", "event": "camera", "items": [["bread", 0.97], ["orange", 1.0]]}
+{"ts": "2026-11-07T12:25:03", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:25:03", "event": "preselect", "type": "plate_leftovers", "ms": 556686}
+{"ts": "2026-11-07T12:25:23", "event": "camera", "items": [["bread", 0.9]]}
+{"ts": "2026-11-07T12:25:28", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:25:28", "event": "disposal", "id": 15, "weight_g": 137.1, "type": "spoiled_stock", "source": "button", "ms": 581003}
+{"ts": "2026-11-07T12:25:44", "event": "camera", "items": [["banana", 0.84]]}
+{"ts": "2026-11-07T12:25:47", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:25:47", "event": "disposal", "id": 16, "weight_g": 151.5, "type": "plate_leftovers", "source": "button", "ms": 600769}
+{"ts": "2026-11-07T12:26:05", "event": "camera", "items": [["banana", 0.97]]}
+{"ts": "2026-11-07T12:26:08", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T12:26:08", "event": "disposal", "id": 17, "weight_g": 36.6, "type": "preparation_waste", "source": "button", "ms": 620978}
+{"ts": "2026-11-07T12:26:23", "event": "camera", "items": [["apple", 0.76]]}
+{"ts": "2026-11-07T12:26:26", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:26:26", "event": "disposal", "id": 18, "weight_g": 35.1, "type": "plate_leftovers", "source": "button", "ms": 639759}
+{"ts": "2026-11-07T12:26:42", "event": "camera", "items": [["banana", 0.98]]}
+{"ts": "2026-11-07T12:26:43", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T12:26:43", "event": "disposal", "id": 19, "weight_g": 57.1, "type": "preparation_waste", "source": "button", "ms": 656621}
+{"ts": "2026-11-07T12:26:57", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T12:26:57", "event": "preselect", "type": "preparation_waste", "ms": 670751}
+{"ts": "2026-11-07T12:27:00", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T12:27:00", "event": "preselect", "type": "preparation_waste", "ms": 673776}
+{"ts": "2026-11-07T12:27:02", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T12:27:02", "event": "preselect", "type": "preparation_waste", "ms": 675060}
+{"ts": "2026-11-07T12:27:51", "event": "removal", "delta_g": -24.9, "g": 508.9, "ms": 724130}
+{"ts": "2026-11-07T12:27:51", "event": "camera_reference"}
+{"ts": "2026-11-07T12:27:55", "event": "removal", "delta_g": -26.4, "g": 482.5, "ms": 728530}
+{"ts": "2026-11-07T12:27:55", "event": "camera_reference"}
+{"ts": "2026-11-07T12:27:58", "event": "removal", "delta_g": -110.7, "g": 371.6, "ms": 730930}
+{"ts": "2026-11-07T12:27:58", "event": "camera_reference"}
+{"ts": "2026-11-07T12:28:01", "event": "removal", "delta_g": -12.0, "g": 360.2, "ms": 734430}
+{"ts": "2026-11-07T12:28:01", "event": "camera_reference"}
+{"ts": "2026-11-07T12:28:04", "event": "removal", "delta_g": -120.7, "g": 239.5, "ms": 737730}
+{"ts": "2026-11-07T12:28:04", "event": "camera_reference"}
+{"ts": "2026-11-07T12:28:19", "event": "removal", "delta_g": -61.1, "g": 176.6, "ms": 752830}
+{"ts": "2026-11-07T12:28:19", "event": "camera_reference"}
+{"ts": "2026-11-07T12:28:30", "event": "removal", "delta_g": -151.1, "g": 25.4, "ms": 763130}
+{"ts": "2026-11-07T12:28:30", "event": "camera_reference"}
+{"ts": "2026-11-07T12:32:46", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:32:46", "event": "preselect", "type": "spoiled_stock", "ms": 1019380}
+{"ts": "2026-11-07T12:32:50", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:32:50", "event": "preselect", "type": "spoiled_stock", "ms": 1023868}
+{"ts": "2026-11-07T12:32:51", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:32:51", "event": "preselect", "type": "spoiled_stock", "ms": 1024514}
+{"ts": "2026-11-07T12:32:51", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:32:51", "event": "preselect", "type": "spoiled_stock", "ms": 1024892}
+{"ts": "2026-11-07T12:32:52", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:32:52", "event": "preselect", "type": "spoiled_stock", "ms": 1025172}
+{"ts": "2026-11-07T12:32:52", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:32:52", "event": "preselect", "type": "spoiled_stock", "ms": 1025467}
+{"ts": "2026-11-07T12:32:52", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:32:52", "event": "preselect", "type": "spoiled_stock", "ms": 1025719}
+{"ts": "2026-11-07T12:32:53", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:32:53", "event": "preselect", "type": "spoiled_stock", "ms": 1025942}
+{"ts": "2026-11-07T12:32:53", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:32:53", "event": "preselect", "type": "spoiled_stock", "ms": 1026139}
+{"ts": "2026-11-07T12:32:53", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:32:53", "event": "preselect", "type": "spoiled_stock", "ms": 1026328}
+{"ts": "2026-11-07T12:32:53", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:32:53", "event": "preselect", "type": "spoiled_stock", "ms": 1026548}
+{"ts": "2026-11-07T12:33:03", "event": "ignored", "delta_g": 8.9, "ms": 1036630}

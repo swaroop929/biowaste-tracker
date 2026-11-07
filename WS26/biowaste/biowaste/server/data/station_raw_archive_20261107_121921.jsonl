@@ -1,0 +1,44 @@
+{"ts": "2026-11-07T12:15:07", "event": "camera_reference"}
+{"ts": "2026-11-07T12:15:07", "event": "removal", "delta_g": -11.0, "g": 27.0, "ms": 297122}
+{"ts": "2026-11-07T12:15:07", "event": "camera_reference"}
+{"ts": "2026-11-07T12:15:10", "event": "removal", "delta_g": -18.4, "g": 8.6, "ms": 299622}
+{"ts": "2026-11-07T12:15:10", "event": "camera_reference"}
+{"ts": "2026-11-07T12:15:49", "event": "info", "msg": "boot", "factor": 427.9784, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T12:15:57", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:15:57", "event": "disposal", "id": 1, "weight_g": 21.4, "type": "spoiled_stock", "source": "button", "ms": 10782}
+{"ts": "2026-11-07T12:15:58", "event": "camera", "items": [["cherry_tomato", 0.99]]}
+{"ts": "2026-11-07T12:16:22", "event": "camera", "items": [["green_grapes", 0.98]]}
+{"ts": "2026-11-07T12:16:22", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:16:22", "event": "disposal", "id": 2, "weight_g": 67.9, "type": "plate_leftovers", "source": "button", "ms": 35941}
+{"ts": "2026-11-07T12:16:33", "event": "camera", "items": [["apple", 0.97]]}
+{"ts": "2026-11-07T12:16:33", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:16:33", "event": "disposal", "id": 3, "weight_g": 21.7, "type": "spoiled_stock", "source": "button", "ms": 46706}
+{"ts": "2026-11-07T12:16:44", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T12:16:44", "event": "disposal", "id": 4, "weight_g": 16.3, "type": "preparation_waste", "source": "button", "ms": 56995}
+{"ts": "2026-11-07T12:16:45", "event": "camera", "items": [["orange", 0.97], ["cherry_tomato", 0.99]]}
+{"ts": "2026-11-07T12:16:56", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:16:56", "event": "preselect", "type": "spoiled_stock", "ms": 69273}
+{"ts": "2026-11-07T12:16:56", "event": "disposal", "id": 5, "weight_g": 17.1, "type": "spoiled_stock", "source": "button_pre", "ms": 69330}
+{"ts": "2026-11-07T12:16:57", "event": "camera", "items": [["bread", 0.96]]}
+{"ts": "2026-11-07T12:17:10", "event": "camera", "items": [["banana", 0.98]]}
+{"ts": "2026-11-07T12:17:11", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:17:11", "event": "disposal", "id": 6, "weight_g": 116.9, "type": "spoiled_stock", "source": "button", "ms": 84508}
+{"ts": "2026-11-07T12:17:24", "event": "camera", "items": [["banana", 0.69]]}
+{"ts": "2026-11-07T12:17:25", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:17:25", "event": "disposal", "id": 7, "weight_g": 146.5, "type": "spoiled_stock", "source": "button", "ms": 98503}
+{"ts": "2026-11-07T12:17:50", "event": "camera", "items": [["banana", 0.99]]}
+{"ts": "2026-11-07T12:17:51", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T12:17:51", "event": "disposal", "id": 8, "weight_g": 69.4, "type": "preparation_waste", "source": "button", "ms": 123979}
+{"ts": "2026-11-07T12:17:59", "event": "removal", "delta_g": -116.8, "g": 346.1, "ms": 132030}
+{"ts": "2026-11-07T12:17:59", "event": "camera_reference"}
+{"ts": "2026-11-07T12:18:09", "event": "camera", "items": [["banana", 0.79]]}
+{"ts": "2026-11-07T12:18:09", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:18:09", "event": "disposal", "id": 9, "weight_g": 97.0, "type": "plate_leftovers", "source": "button", "ms": 142647}
+{"ts": "2026-11-07T12:18:54", "event": "removal", "delta_g": -71.5, "g": 366.9, "ms": 187630}
+{"ts": "2026-11-07T12:18:54", "event": "camera_reference"}
+{"ts": "2026-11-07T12:18:59", "event": "removal", "delta_g": -125.2, "g": 241.6, "ms": 192130}
+{"ts": "2026-11-07T12:18:59", "event": "camera_reference"}
+{"ts": "2026-11-07T12:19:08", "event": "camera_reference"}
+{"ts": "2026-11-07T12:19:10", "event": "camera_reference"}
+{"ts": "2026-11-07T12:19:18", "event": "camera_reference"}
+{"ts": "2026-11-07T12:19:18", "event": "camera_reference"}

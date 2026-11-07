@@ -1,0 +1,2 @@
+record_no,timestamp,weight_g,type,station_id,confidence,source,food,food_conf,image_id,device_event_id
+1,2026-11-07T12:19:51,91.7,preparation_waste,bin-1,high,button_pre,orange+banana,0.79,20261107_121949_686_0.jpg,10

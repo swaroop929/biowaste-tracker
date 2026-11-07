@@ -1,0 +1,28 @@
+{
+  "restaurant": "Demo Kitchen Reutlingen (salad bar)",
+  "note": "Second demo menu: banana, green salad leaves, green grapes, red cherry tomatoes. non_food and empty are added automatically.",
+  "items": {
+    "banana": [
+      "a photo of a banana",
+      "a photo of a banana peel"
+    ],
+    "salad": [
+      "a photo of green lettuce leaves",
+      "a photo of a flat green salad leaf",
+      "a photo of torn green salad leaves",
+      "a photo of a lettuce leaf on a white surface"
+    ],
+    "grapes": [
+      "a photo of green grapes",
+      "a photo of small round green grapes",
+      "a photo of a bunch of green grapes",
+      "a photo of loose green grape berries"
+    ],
+    "cherry_tomato": [
+      "a photo of red cherry tomatoes",
+      "a photo of small round red tomatoes",
+      "a photo of cherry tomatoes",
+      "a photo of a halved red cherry tomato"
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+{"ts": "2026-11-07T12:19:21", "event": "camera_reference"}
+{"ts": "2026-11-07T12:19:25", "event": "camera_reference"}
+{"ts": "2026-11-07T12:19:48", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T12:19:48", "event": "preselect", "type": "preparation_waste", "ms": 241757}
+{"ts": "2026-11-07T12:19:49", "event": "disposal", "id": 10, "weight_g": 91.7, "type": "preparation_waste", "source": "button_pre", "ms": 242230}
+{"ts": "2026-11-07T12:19:51", "event": "camera", "items": [["orange", 0.79], ["banana", 0.4]]}

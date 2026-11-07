@@ -1,0 +1,25 @@
+{"ts": "2026-11-07T12:59:53", "event": "camera_reference"}
+{"ts": "2026-11-07T12:59:54", "event": "info", "msg": "boot", "factor": 427.9784, "restored": 1, "baseline": -0.0}
+{"ts": "2026-11-07T13:00:05", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T13:00:05", "event": "disposal", "id": 1, "weight_g": 20.6, "type": "preparation_waste", "source": "button", "ms": 13749}
+{"ts": "2026-11-07T13:00:06", "event": "camera", "items": [["cherry_tomato", 0.98]]}
+{"ts": "2026-11-07T13:00:14", "event": "camera", "items": [["broccoli", 1.0]]}
+{"ts": "2026-11-07T13:00:14", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T13:00:14", "event": "disposal", "id": 2, "weight_g": 13.0, "type": "plate_leftovers", "source": "button", "ms": 22549}
+{"ts": "2026-11-07T13:00:51", "event": "camera", "items": [["noodles", 0.88], ["banana", 0.61], ["bread", 0.38], ["empty", 0.44]]}
+{"ts": "2026-11-07T13:00:55", "event": "disposal", "id": 3, "weight_g": 14.0, "type": "unassigned", "source": "none", "ms": 63309}
+{"ts": "2026-11-07T13:00:55", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T13:00:55", "event": "preselect", "type": "plate_leftovers", "ms": 63510}
+{"ts": "2026-11-07T13:00:56", "event": "disposal", "id": 4, "weight_g": 11.9, "type": "plate_leftovers", "source": "button_pre", "ms": 64308}
+{"ts": "2026-11-07T13:01:01", "event": "camera", "items": [["noodles", 0.99], ["empty", 0.73], ["banana", 0.48]]}
+{"ts": "2026-11-07T13:04:29", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T13:04:29", "event": "preselect", "type": "preparation_waste", "ms": 278112}
+{"ts": "2026-11-07T13:14:45", "event": "disposal", "id": 5, "weight_g": 12.5, "type": "unassigned", "source": "none", "ms": 893708}
+{"ts": "2026-11-07T13:14:46", "event": "removal", "delta_g": -14.8, "g": 59.6, "ms": 894808}
+{"ts": "2026-11-07T13:14:47", "event": "camera", "items": [["empty", 0.51], ["banana", 0.67]]}
+{"ts": "2026-11-07T13:14:47", "event": "camera_reference"}
+{"ts": "2026-11-07T13:14:54", "event": "removal", "delta_g": -41.9, "g": 17.7, "ms": 902708}
+{"ts": "2026-11-07T13:14:54", "event": "camera_reference"}
+{"ts": "2026-11-07T13:14:56", "event": "ignored", "delta_g": 9.6, "ms": 905108}
+{"ts": "2026-11-07T13:14:59", "event": "removal", "delta_g": -33.3, "g": -6.2, "ms": 908008}
+{"ts": "2026-11-07T13:14:59", "event": "camera_reference"}

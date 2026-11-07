@@ -1,0 +1,41 @@
+{"ts": "2026-11-07T12:34:37", "event": "camera_reference"}
+{"ts": "2026-11-07T12:34:42", "event": "disposal", "id": 1, "weight_g": 45.8, "type": "preparation_waste", "source": "button_pre", "ms": 27863}
+{"ts": "2026-11-07T12:34:43", "event": "camera", "items": [["green_grapes", 0.99]]}
+{"ts": "2026-11-07T12:34:54", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:34:54", "event": "preselect", "type": "spoiled_stock", "ms": 39676}
+{"ts": "2026-11-07T12:35:02", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:35:02", "event": "preselect", "type": "spoiled_stock", "ms": 48538}
+{"ts": "2026-11-07T12:35:04", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:35:04", "event": "preselect", "type": "plate_leftovers", "ms": 49815}
+{"ts": "2026-11-07T12:35:05", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:35:05", "event": "preselect", "type": "plate_leftovers", "ms": 51336}
+{"ts": "2026-11-07T12:35:05", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:35:05", "event": "preselect", "type": "plate_leftovers", "ms": 51518}
+{"ts": "2026-11-07T12:35:06", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:35:06", "event": "preselect", "type": "plate_leftovers", "ms": 51728}
+{"ts": "2026-11-07T12:35:06", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:35:06", "event": "preselect", "type": "plate_leftovers", "ms": 51910}
+{"ts": "2026-11-07T12:35:06", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:35:06", "event": "preselect", "type": "plate_leftovers", "ms": 52099}
+{"ts": "2026-11-07T12:35:06", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:35:06", "event": "preselect", "type": "plate_leftovers", "ms": 52304}
+{"ts": "2026-11-07T12:35:06", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:35:06", "event": "preselect", "type": "plate_leftovers", "ms": 52499}
+{"ts": "2026-11-07T12:35:07", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:35:07", "event": "preselect", "type": "plate_leftovers", "ms": 52674}
+{"ts": "2026-11-07T12:35:07", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:35:07", "event": "preselect", "type": "plate_leftovers", "ms": 52901}
+{"ts": "2026-11-07T12:35:12", "event": "disposal", "id": 2, "weight_g": 28.8, "type": "plate_leftovers", "source": "button_pre", "ms": 58463}
+{"ts": "2026-11-07T12:35:13", "event": "camera", "items": [["apple", 0.99]]}
+{"ts": "2026-11-07T12:35:22", "event": "camera", "items": [["bread", 0.98]]}
+{"ts": "2026-11-07T12:35:24", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:35:24", "event": "disposal", "id": 3, "weight_g": 23.7, "type": "spoiled_stock", "source": "button", "ms": 69773}
+{"ts": "2026-11-07T12:35:31", "event": "removal", "delta_g": -21.4, "g": 78.9, "ms": 76963}
+{"ts": "2026-11-07T12:35:31", "event": "camera_reference"}
+{"ts": "2026-11-07T12:35:34", "event": "removal", "delta_g": -20.7, "g": 58.4, "ms": 80163}
+{"ts": "2026-11-07T12:35:34", "event": "camera_reference"}
+{"ts": "2026-11-07T12:35:45", "event": "removal", "delta_g": -40.9, "g": 17.5, "ms": 91463}
+{"ts": "2026-11-07T12:35:45", "event": "camera_reference"}
+{"ts": "2026-11-07T12:35:58", "event": "removal", "delta_g": -14.3, "g": 2.0, "ms": 103763}
+{"ts": "2026-11-07T12:35:58", "event": "camera_reference"}
+{"ts": "2026-11-07T12:57:39", "event": "info", "msg": "boot", "factor": 427.9784, "restored": 1, "baseline": -0.1}

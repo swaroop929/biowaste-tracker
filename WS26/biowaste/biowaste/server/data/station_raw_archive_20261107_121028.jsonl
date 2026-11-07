@@ -1,0 +1,343 @@
+{"ts": "2026-11-07T08:34:49", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T08:39:09", "event": "camera_reference"}
+{"ts": "2026-11-07T08:39:12", "event": "camera_reference"}
+{"ts": "2026-11-07T08:39:16", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T08:39:16", "event": "preselect", "type": "preparation_waste", "ms": 267806}
+{"ts": "2026-11-07T08:39:20", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T08:39:20", "event": "preselect", "type": "preparation_waste", "ms": 271389}
+{"ts": "2026-11-07T08:39:29", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T08:39:29", "event": "preselect", "type": "spoiled_stock", "ms": 280632}
+{"ts": "2026-11-07T08:39:31", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T08:39:31", "event": "preselect", "type": "spoiled_stock", "ms": 282625}
+{"ts": "2026-11-07T08:39:56", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T08:39:56", "event": "preselect", "type": "plate_leftovers", "ms": 307137}
+{"ts": "2026-11-07T08:40:00", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T08:40:00", "event": "preselect", "type": "plate_leftovers", "ms": 311560}
+{"ts": "2026-11-07T08:44:49", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T08:45:16", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T08:45:16", "event": "preselect", "type": "preparation_waste", "ms": 26820}
+{"ts": "2026-11-07T08:45:41", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T08:45:41", "event": "preselect", "type": "spoiled_stock", "ms": 51790}
+{"ts": "2026-11-07T08:48:20", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T08:48:37", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T08:48:43", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T08:48:43", "event": "preselect", "type": "preparation_waste", "ms": 6127}
+{"ts": "2026-11-07T08:49:06", "event": "camera", "items": [["banana", 0.53]]}
+{"ts": "2026-11-07T08:49:06", "event": "camera", "items": []}
+{"ts": "2026-11-07T08:49:43", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T08:49:43", "event": "preselect", "type": "plate_leftovers", "ms": 66546}
+{"ts": "2026-11-07T08:49:54", "event": "camera", "items": [["banana", 0.99]]}
+{"ts": "2026-11-07T08:49:55", "event": "camera", "items": []}
+{"ts": "2026-11-07T08:50:04", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T08:50:04", "event": "preselect", "type": "preparation_waste", "ms": 86981}
+{"ts": "2026-11-07T08:50:08", "event": "camera", "items": [["banana", 1.0]]}
+{"ts": "2026-11-07T08:50:40", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T08:50:40", "event": "preselect", "type": "plate_leftovers", "ms": 123214}
+{"ts": "2026-11-07T08:50:49", "event": "camera", "items": [["orange", 0.97]]}
+{"ts": "2026-11-07T08:50:50", "event": "camera", "items": []}
+{"ts": "2026-11-07T08:53:15", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T08:53:50", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T08:53:57", "event": "camera_reference"}
+{"ts": "2026-11-07T08:53:58", "event": "camera_reference"}
+{"ts": "2026-11-07T08:54:33", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T08:54:33", "event": "preselect", "type": "plate_leftovers", "ms": 42447}
+{"ts": "2026-11-07T08:55:07", "event": "camera", "items": [["banana", 1.0]]}
+{"ts": "2026-11-07T08:55:49", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T08:55:49", "event": "preselect", "type": "preparation_waste", "ms": 118959}
+{"ts": "2026-11-07T08:55:52", "event": "camera", "items": [["orange", 0.84]]}
+{"ts": "2026-11-07T08:56:19", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T08:56:19", "event": "preselect", "type": "preparation_waste", "ms": 148451}
+{"ts": "2026-11-07T08:56:24", "event": "camera", "items": [["apple", 0.74]]}
+{"ts": "2026-11-07T08:56:38", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T08:56:38", "event": "preselect", "type": "spoiled_stock", "ms": 167799}
+{"ts": "2026-11-07T08:56:43", "event": "camera", "items": [["orange", 0.99], ["bread", 0.99]]}
+{"ts": "2026-11-07T08:58:18", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T08:58:18", "event": "preselect", "type": "spoiled_stock", "ms": 267505}
+{"ts": "2026-11-07T08:58:23", "event": "camera", "items": [["banana", 0.76]]}
+{"ts": "2026-11-07T09:19:50", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T09:25:26", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T09:44:11", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T09:59:40", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T09:59:40", "event": "preselect", "type": "preparation_waste", "ms": 928102}
+{"ts": "2026-11-07T09:59:40", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T09:59:40", "event": "preselect", "type": "spoiled_stock", "ms": 928625}
+{"ts": "2026-11-07T09:59:41", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T09:59:41", "event": "preselect", "type": "plate_leftovers", "ms": 929885}
+{"ts": "2026-11-07T09:59:42", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T09:59:42", "event": "preselect", "type": "plate_leftovers", "ms": 930228}
+{"ts": "2026-11-07T10:07:29", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T10:13:20", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T10:19:57", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": -0.0}
+{"ts": "2026-11-07T10:21:59", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 19949.1}
+{"ts": "2026-11-07T10:22:00", "event": "overload", "g": 19949.1}
+{"ts": "2026-11-07T10:25:34", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 19949.1}
+{"ts": "2026-11-07T10:25:34", "event": "overload", "g": 19949.1}
+{"ts": "2026-11-07T11:21:34", "event": "info", "msg": "boot", "factor": 427.9784, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T11:22:20", "event": "camera", "items": [["banana", 1.0]]}
+{"ts": "2026-11-07T11:22:21", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T11:22:21", "event": "disposal", "id": 1, "weight_g": 35.9, "type": "preparation_waste", "source": "button", "ms": 49021}
+{"ts": "2026-11-07T11:23:06", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:23:06", "event": "disposal", "id": 2, "weight_g": 147.3, "type": "spoiled_stock", "source": "button", "ms": 93655}
+{"ts": "2026-11-07T11:23:07", "event": "camera", "items": [["orange", 0.94], ["empty", 0.56]]}
+{"ts": "2026-11-07T11:23:38", "event": "camera", "items": [["banana", 1.0], ["unknown", 0.28]]}
+{"ts": "2026-11-07T11:23:39", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:23:39", "event": "disposal", "id": 3, "weight_g": 39.3, "type": "plate_leftovers", "source": "button", "ms": 126843}
+{"ts": "2026-11-07T11:24:14", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:24:14", "event": "disposal", "id": 4, "weight_g": 29.4, "type": "plate_leftovers", "source": "button", "ms": 162103}
+{"ts": "2026-11-07T11:24:16", "event": "camera", "items": [["apple", 0.55], ["empty", 0.27], ["unknown", 0.28]]}
+{"ts": "2026-11-07T11:24:49", "event": "camera", "items": [["orange", 0.56], ["unknown", 0.27], ["empty", 0.35]]}
+{"ts": "2026-11-07T11:24:49", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:24:49", "event": "disposal", "id": 5, "weight_g": 33.2, "type": "spoiled_stock", "source": "button", "ms": 197425}
+{"ts": "2026-11-07T11:25:30", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T11:25:30", "event": "preselect", "type": "preparation_waste", "ms": 237964}
+{"ts": "2026-11-07T11:25:42", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T11:25:42", "event": "preselect", "type": "preparation_waste", "ms": 250376}
+{"ts": "2026-11-07T11:25:51", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T11:25:51", "event": "preselect", "type": "preparation_waste", "ms": 259132}
+{"ts": "2026-11-07T11:27:08", "event": "camera", "items": [["bread", 0.99], ["empty", 0.4], ["unknown", 0.35]]}
+{"ts": "2026-11-07T11:27:11", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:27:11", "event": "disposal", "id": 6, "weight_g": 22.3, "type": "spoiled_stock", "source": "button", "ms": 338626}
+{"ts": "2026-11-07T11:27:49", "event": "removal", "delta_g": -19.3, "g": 276.8, "ms": 376972}
+{"ts": "2026-11-07T11:27:49", "event": "camera_reference"}
+{"ts": "2026-11-07T11:27:55", "event": "removal", "delta_g": -145.7, "g": 130.7, "ms": 383572}
+{"ts": "2026-11-07T11:27:56", "event": "camera_reference"}
+{"ts": "2026-11-07T11:27:59", "event": "removal", "delta_g": -69.3, "g": 61.4, "ms": 387372}
+{"ts": "2026-11-07T11:27:59", "event": "camera_reference"}
+{"ts": "2026-11-07T11:28:28", "event": "removal", "delta_g": -61.5, "g": 0.5, "ms": 416372}
+{"ts": "2026-11-07T11:28:28", "event": "camera_reference"}
+{"ts": "2026-11-07T11:29:45", "event": "camera", "items": [["empty", 0.92]]}
+{"ts": "2026-11-07T11:29:50", "event": "disposal", "id": 7, "weight_g": 14.3, "type": "unassigned", "source": "none", "ms": 498472}
+{"ts": "2026-11-07T11:29:51", "event": "removal", "delta_g": -14.1, "g": 1.5, "ms": 499472}
+{"ts": "2026-11-07T11:29:51", "event": "camera_reference"}
+{"ts": "2026-11-07T11:30:14", "event": "ignored", "delta_g": 0.1, "ms": 522172}
+{"ts": "2026-11-07T11:30:26", "event": "ignored", "delta_g": -0.9, "ms": 534272}
+{"ts": "2026-11-07T11:30:49", "event": "camera", "items": [["empty", 0.92]]}
+{"ts": "2026-11-07T11:30:54", "event": "disposal", "id": 8, "weight_g": 19.4, "type": "unassigned", "source": "none", "ms": 561773}
+{"ts": "2026-11-07T11:33:18", "event": "info", "msg": "boot", "factor": 427.9784, "restored": 1, "baseline": -0.0}
+{"ts": "2026-11-07T11:33:48", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:33:48", "event": "preselect", "type": "spoiled_stock", "ms": 32389}
+{"ts": "2026-11-07T11:34:06", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:34:06", "event": "preselect", "type": "spoiled_stock", "ms": 50733}
+{"ts": "2026-11-07T11:34:07", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:34:07", "event": "preselect", "type": "plate_leftovers", "ms": 51930}
+{"ts": "2026-11-07T11:34:16", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:34:16", "event": "preselect", "type": "plate_leftovers", "ms": 60423}
+{"ts": "2026-11-07T11:34:31", "event": "disposal", "id": 1, "weight_g": 27.3, "type": "plate_leftovers", "source": "button_pre", "ms": 75229}
+{"ts": "2026-11-07T11:34:32", "event": "camera", "items": [["empty", 1.0]]}
+{"ts": "2026-11-07T11:34:32", "event": "removal", "delta_g": -30.6, "g": -1.8, "ms": 76629}
+{"ts": "2026-11-07T11:34:32", "event": "camera_reference"}
+{"ts": "2026-11-07T11:35:12", "event": "info", "msg": "boot", "factor": 427.9784, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T11:35:20", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:35:20", "event": "preselect", "type": "plate_leftovers", "ms": 10671}
+{"ts": "2026-11-07T11:35:29", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:35:29", "event": "preselect", "type": "plate_leftovers", "ms": 20157}
+{"ts": "2026-11-07T11:35:30", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:35:30", "event": "preselect", "type": "spoiled_stock", "ms": 20973}
+{"ts": "2026-11-07T11:35:31", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:35:31", "event": "preselect", "type": "plate_leftovers", "ms": 21565}
+{"ts": "2026-11-07T11:35:31", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:35:31", "event": "preselect", "type": "spoiled_stock", "ms": 22030}
+{"ts": "2026-11-07T11:35:32", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:35:32", "event": "preselect", "type": "plate_leftovers", "ms": 22514}
+{"ts": "2026-11-07T11:35:32", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:35:32", "event": "preselect", "type": "spoiled_stock", "ms": 22986}
+{"ts": "2026-11-07T11:35:33", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T11:35:33", "event": "preselect", "type": "preparation_waste", "ms": 23458}
+{"ts": "2026-11-07T11:35:33", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:35:33", "event": "preselect", "type": "spoiled_stock", "ms": 23905}
+{"ts": "2026-11-07T11:35:33", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:35:33", "event": "preselect", "type": "plate_leftovers", "ms": 24336}
+{"ts": "2026-11-07T11:37:01", "event": "camera", "items": [["banana", 0.99]]}
+{"ts": "2026-11-07T11:37:01", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T11:37:01", "event": "disposal", "id": 1, "weight_g": 42.2, "type": "preparation_waste", "source": "button", "ms": 111808}
+{"ts": "2026-11-07T11:38:55", "event": "removal", "delta_g": -34.9, "g": 8.0, "ms": 225598}
+{"ts": "2026-11-07T11:38:55", "event": "camera_reference"}
+{"ts": "2026-11-07T11:39:58", "event": "info", "msg": "boot", "factor": 427.9784, "restored": 1, "baseline": 0.1}
+{"ts": "2026-11-07T11:40:09", "event": "camera_reference"}
+{"ts": "2026-11-07T11:40:10", "event": "camera_reference"}
+{"ts": "2026-11-07T11:40:12", "event": "camera_reference"}
+{"ts": "2026-11-07T11:40:27", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:40:27", "event": "preselect", "type": "plate_leftovers", "ms": 30991}
+{"ts": "2026-11-07T11:40:33", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:40:33", "event": "preselect", "type": "plate_leftovers", "ms": 36948}
+{"ts": "2026-11-07T11:40:34", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:40:34", "event": "preselect", "type": "plate_leftovers", "ms": 37716}
+{"ts": "2026-11-07T11:40:34", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:40:34", "event": "preselect", "type": "plate_leftovers", "ms": 38312}
+{"ts": "2026-11-07T11:40:36", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:40:36", "event": "preselect", "type": "plate_leftovers", "ms": 39550}
+{"ts": "2026-11-07T11:40:39", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:40:39", "event": "preselect", "type": "plate_leftovers", "ms": 43377}
+{"ts": "2026-11-07T11:40:44", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:40:44", "event": "preselect", "type": "plate_leftovers", "ms": 47825}
+{"ts": "2026-11-07T11:40:52", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:40:52", "event": "preselect", "type": "plate_leftovers", "ms": 55692}
+{"ts": "2026-11-07T11:41:02", "event": "ignored", "delta_g": -2.5, "ms": 65801}
+{"ts": "2026-11-07T11:41:21", "event": "camera", "items": [["banana", 1.0], ["unknown", 0.29]]}
+{"ts": "2026-11-07T11:41:23", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T11:41:23", "event": "disposal", "id": 1, "weight_g": 44.0, "type": "preparation_waste", "source": "button", "ms": 86971}
+{"ts": "2026-11-07T11:41:57", "event": "removal", "delta_g": -27.8, "g": 10.5, "ms": 120901}
+{"ts": "2026-11-07T11:41:57", "event": "camera_reference"}
+{"ts": "2026-11-07T11:41:58", "event": "camera_reference"}
+{"ts": "2026-11-07T11:41:59", "event": "camera_reference"}
+{"ts": "2026-11-07T11:42:00", "event": "camera_reference"}
+{"ts": "2026-11-07T11:42:12", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T11:42:12", "event": "disposal", "id": 2, "weight_g": 23.9, "type": "preparation_waste", "source": "button", "ms": 135793}
+{"ts": "2026-11-07T11:42:13", "event": "camera", "items": [["apple", 0.88]]}
+{"ts": "2026-11-07T11:42:18", "event": "removal", "delta_g": -22.8, "g": 10.7, "ms": 142401}
+{"ts": "2026-11-07T11:42:18", "event": "camera_reference"}
+{"ts": "2026-11-07T11:42:42", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:42:42", "event": "preselect", "type": "plate_leftovers", "ms": 165671}
+{"ts": "2026-11-07T11:42:57", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:42:57", "event": "preselect", "type": "plate_leftovers", "ms": 180900}
+{"ts": "2026-11-07T11:43:06", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:43:06", "event": "preselect", "type": "plate_leftovers", "ms": 189826}
+{"ts": "2026-11-07T11:43:07", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:43:07", "event": "preselect", "type": "plate_leftovers", "ms": 191045}
+{"ts": "2026-11-07T11:43:12", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:43:12", "event": "preselect", "type": "plate_leftovers", "ms": 195772}
+{"ts": "2026-11-07T11:43:14", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:43:14", "event": "preselect", "type": "spoiled_stock", "ms": 197721}
+{"ts": "2026-11-07T11:44:31", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:44:31", "event": "preselect", "type": "plate_leftovers", "ms": 274539}
+{"ts": "2026-11-07T11:44:56", "event": "ignored", "delta_g": 5.8, "ms": 300301}
+{"ts": "2026-11-07T11:45:22", "event": "camera_reference"}
+{"ts": "2026-11-07T11:45:23", "event": "camera_reference"}
+{"ts": "2026-11-07T11:45:24", "event": "camera_reference"}
+{"ts": "2026-11-07T11:45:24", "event": "camera_reference"}
+{"ts": "2026-11-07T11:45:24", "event": "camera_reference"}
+{"ts": "2026-11-07T11:45:25", "event": "camera_reference"}
+{"ts": "2026-11-07T11:46:39", "event": "removal", "delta_g": -10.5, "g": 8.8, "ms": 403201}
+{"ts": "2026-11-07T11:46:39", "event": "camera_reference"}
+{"ts": "2026-11-07T11:46:45", "event": "ignored", "delta_g": -2.5, "ms": 408801}
+{"ts": "2026-11-07T11:46:47", "event": "ignored", "delta_g": -0.4, "ms": 411001}
+{"ts": "2026-11-07T11:46:52", "event": "camera_reference"}
+{"ts": "2026-11-07T11:47:04", "event": "camera_reference"}
+{"ts": "2026-11-07T11:48:18", "event": "info", "msg": "boot", "factor": 427.9784, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T11:48:44", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:48:44", "event": "preselect", "type": "plate_leftovers", "ms": 28550}
+{"ts": "2026-11-07T11:48:48", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:48:48", "event": "preselect", "type": "plate_leftovers", "ms": 32829}
+{"ts": "2026-11-07T11:48:49", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:48:49", "event": "preselect", "type": "plate_leftovers", "ms": 33449}
+{"ts": "2026-11-07T11:48:52", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:48:52", "event": "preselect", "type": "plate_leftovers", "ms": 36455}
+{"ts": "2026-11-07T11:48:53", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:48:53", "event": "preselect", "type": "plate_leftovers", "ms": 37201}
+{"ts": "2026-11-07T11:48:53", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:48:53", "event": "preselect", "type": "plate_leftovers", "ms": 37722}
+{"ts": "2026-11-07T11:51:29", "event": "info", "msg": "boot", "factor": 427.9784, "restored": 1, "baseline": 0.1}
+{"ts": "2026-11-07T11:51:46", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:51:46", "event": "preselect", "type": "spoiled_stock", "ms": 19694}
+{"ts": "2026-11-07T11:51:53", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:51:53", "event": "preselect", "type": "spoiled_stock", "ms": 26318}
+{"ts": "2026-11-07T11:51:53", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:51:53", "event": "preselect", "type": "plate_leftovers", "ms": 26989}
+{"ts": "2026-11-07T11:51:54", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:51:54", "event": "preselect", "type": "spoiled_stock", "ms": 27631}
+{"ts": "2026-11-07T11:51:54", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:51:54", "event": "preselect", "type": "plate_leftovers", "ms": 28046}
+{"ts": "2026-11-07T11:51:55", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:51:55", "event": "preselect", "type": "spoiled_stock", "ms": 28588}
+{"ts": "2026-11-07T11:51:55", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:51:55", "event": "preselect", "type": "plate_leftovers", "ms": 29243}
+{"ts": "2026-11-07T11:51:56", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:51:56", "event": "preselect", "type": "spoiled_stock", "ms": 30058}
+{"ts": "2026-11-07T11:51:57", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:51:57", "event": "preselect", "type": "plate_leftovers", "ms": 30617}
+{"ts": "2026-11-07T11:52:05", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:52:05", "event": "preselect", "type": "plate_leftovers", "ms": 38817}
+{"ts": "2026-11-07T11:52:06", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:52:06", "event": "preselect", "type": "plate_leftovers", "ms": 39362}
+{"ts": "2026-11-07T11:52:06", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:52:06", "event": "preselect", "type": "spoiled_stock", "ms": 40086}
+{"ts": "2026-11-07T11:52:07", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:52:07", "event": "preselect", "type": "plate_leftovers", "ms": 40603}
+{"ts": "2026-11-07T11:52:19", "event": "ignored", "delta_g": 0.6, "ms": 52782}
+{"ts": "2026-11-07T11:52:20", "event": "camera_reference"}
+{"ts": "2026-11-07T11:52:20", "event": "camera_reference"}
+{"ts": "2026-11-07T11:52:21", "event": "camera_reference"}
+{"ts": "2026-11-07T11:52:21", "event": "camera_reference"}
+{"ts": "2026-11-07T11:52:22", "event": "camera_reference"}
+{"ts": "2026-11-07T11:52:33", "event": "camera_reference"}
+{"ts": "2026-11-07T11:52:45", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T11:52:45", "event": "disposal", "id": 1, "weight_g": 51.4, "type": "preparation_waste", "source": "button", "ms": 79196}
+{"ts": "2026-11-07T11:52:47", "event": "camera", "items": [["banana", 1.0], ["empty", 0.97]]}
+{"ts": "2026-11-07T11:53:01", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:53:01", "event": "preselect", "type": "spoiled_stock", "ms": 94702}
+{"ts": "2026-11-07T11:53:16", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:53:16", "event": "preselect", "type": "spoiled_stock", "ms": 109792}
+{"ts": "2026-11-07T11:53:17", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:53:17", "event": "preselect", "type": "plate_leftovers", "ms": 111238}
+{"ts": "2026-11-07T11:53:18", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:53:18", "event": "preselect", "type": "spoiled_stock", "ms": 112247}
+{"ts": "2026-11-07T11:53:19", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:53:19", "event": "preselect", "type": "plate_leftovers", "ms": 113155}
+{"ts": "2026-11-07T11:53:31", "event": "disposal", "id": 2, "weight_g": 17.7, "type": "plate_leftovers", "source": "button_pre", "ms": 124282}
+{"ts": "2026-11-07T11:53:32", "event": "camera", "items": [["salad", 0.97], ["banana", 1.0]]}
+{"ts": "2026-11-07T11:53:42", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:53:42", "event": "preselect", "type": "plate_leftovers", "ms": 135716}
+{"ts": "2026-11-07T11:53:44", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:53:44", "event": "preselect", "type": "spoiled_stock", "ms": 137788}
+{"ts": "2026-11-07T11:53:45", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T11:53:45", "event": "preselect", "type": "preparation_waste", "ms": 139230}
+{"ts": "2026-11-07T11:53:54", "event": "camera_reference"}
+{"ts": "2026-11-07T11:53:55", "event": "removal", "delta_g": -30.7, "g": 30.7, "ms": 148582}
+{"ts": "2026-11-07T11:53:55", "event": "camera_reference"}
+{"ts": "2026-11-07T11:54:07", "event": "removal", "delta_g": -25.4, "g": 4.4, "ms": 160582}
+{"ts": "2026-11-07T11:54:07", "event": "camera_reference"}
+{"ts": "2026-11-07T11:54:25", "event": "info", "msg": "boot", "factor": 427.9784, "restored": 1, "baseline": 0.1}
+{"ts": "2026-11-07T11:54:27", "event": "camera_reference"}
+{"ts": "2026-11-07T11:55:25", "event": "camera", "items": [["cherry_tomato", 0.97]]}
+{"ts": "2026-11-07T11:55:26", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:55:26", "event": "disposal", "id": 1, "weight_g": 11.8, "type": "spoiled_stock", "source": "button", "ms": 63158}
+{"ts": "2026-11-07T11:55:33", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:55:33", "event": "preselect", "type": "plate_leftovers", "ms": 70543}
+{"ts": "2026-11-07T11:55:44", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:55:44", "event": "preselect", "type": "plate_leftovers", "ms": 81264}
+{"ts": "2026-11-07T11:55:48", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:55:48", "event": "preselect", "type": "plate_leftovers", "ms": 85556}
+{"ts": "2026-11-07T11:55:50", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:55:50", "event": "preselect", "type": "plate_leftovers", "ms": 87436}
+{"ts": "2026-11-07T11:55:51", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:55:51", "event": "preselect", "type": "plate_leftovers", "ms": 88344}
+{"ts": "2026-11-07T11:55:55", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:55:55", "event": "preselect", "type": "plate_leftovers", "ms": 92006}
+{"ts": "2026-11-07T11:56:19", "event": "removal", "delta_g": -16.2, "g": -2.3, "ms": 116001}
+{"ts": "2026-11-07T11:56:19", "event": "camera_reference"}
+{"ts": "2026-11-07T11:56:26", "event": "camera_reference"}
+{"ts": "2026-11-07T11:56:27", "event": "camera_reference"}
+{"ts": "2026-11-07T11:56:32", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:56:32", "event": "preselect", "type": "spoiled_stock", "ms": 129372}
+{"ts": "2026-11-07T11:56:37", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:56:37", "event": "preselect", "type": "spoiled_stock", "ms": 134004}
+{"ts": "2026-11-07T11:56:37", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:56:37", "event": "preselect", "type": "plate_leftovers", "ms": 134586}
+{"ts": "2026-11-07T11:56:38", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:56:38", "event": "preselect", "type": "plate_leftovers", "ms": 135172}
+{"ts": "2026-11-07T11:56:38", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:56:38", "event": "preselect", "type": "plate_leftovers", "ms": 135485}
+{"ts": "2026-11-07T11:56:38", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:56:38", "event": "preselect", "type": "plate_leftovers", "ms": 135688}
+{"ts": "2026-11-07T11:56:38", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:56:38", "event": "preselect", "type": "plate_leftovers", "ms": 135905}
+{"ts": "2026-11-07T11:56:39", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T11:56:39", "event": "preselect", "type": "plate_leftovers", "ms": 136106}
+{"ts": "2026-11-07T11:56:39", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T11:56:39", "event": "preselect", "type": "preparation_waste", "ms": 136684}
+{"ts": "2026-11-07T11:56:39", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T11:56:39", "event": "preselect", "type": "preparation_waste", "ms": 136857}
+{"ts": "2026-11-07T11:56:40", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T11:56:40", "event": "preselect", "type": "preparation_waste", "ms": 137012}
+{"ts": "2026-11-07T11:57:19", "event": "info", "msg": "boot", "factor": 427.9784, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T11:57:20", "event": "camera_reference"}
+{"ts": "2026-11-07T11:57:26", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:57:26", "event": "preselect", "type": "spoiled_stock", "ms": 10054}
+{"ts": "2026-11-07T11:58:15", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T11:58:15", "event": "disposal", "id": 1, "weight_g": 51.2, "type": "spoiled_stock", "source": "button", "ms": 58735}
+{"ts": "2026-11-07T11:58:16", "event": "camera", "items": [["grapes", 0.99]]}
+{"ts": "2026-11-07T11:58:20", "event": "removal", "delta_g": -48.4, "g": 1.5, "ms": 64225}
+{"ts": "2026-11-07T11:58:21", "event": "camera_reference"}
+{"ts": "2026-11-07T12:00:10", "event": "info", "msg": "boot", "factor": 427.9784, "restored": 1, "baseline": 0.1}
+{"ts": "2026-11-07T12:07:06", "event": "camera_reference"}
+{"ts": "2026-11-07T12:10:13", "event": "info", "msg": "boot", "factor": 427.9784, "restored": 1, "baseline": 0.0}

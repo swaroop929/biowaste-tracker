@@ -1,0 +1,4 @@
+record_no,timestamp,weight_g,type,station_id,confidence,source,food,food_conf,image_id,device_event_id
+1,2026-11-07T12:34:43,45.8,preparation_waste,bin-1,high,button_pre,green_grapes,0.99,20261107_123442_521_0.jpg,1
+2,2026-11-07T12:35:13,28.8,plate_leftovers,bin-1,high,button_pre,apple,0.99,20261107_123513_040_0.jpg,2
+3,2026-11-07T12:35:24,23.7,spoiled_stock,bin-1,high,button,bread,0.98,20261107_123522_011_0.jpg,3

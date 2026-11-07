@@ -1,0 +1,2 @@
+record_no,timestamp,weight_g,type,station_id,confidence,source,food,food_conf,image_id,device_event_id
+1,2026-11-07T12:59:19,25.1,plate_leftovers,bin-1,high,button_pre,broccoli+bread,1.0,20261107_125917_421_0.jpg,1

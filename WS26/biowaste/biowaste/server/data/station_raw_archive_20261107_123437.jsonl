@@ -1,0 +1,10 @@
+{"ts": "2026-11-07T12:34:01", "event": "camera_reference"}
+{"ts": "2026-11-07T12:34:16", "event": "info", "msg": "boot", "factor": 427.9784, "restored": 1, "baseline": -0.1}
+{"ts": "2026-11-07T12:34:18", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T12:34:18", "event": "preselect", "type": "preparation_waste", "ms": 3764}
+{"ts": "2026-11-07T12:34:20", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:34:20", "event": "preselect", "type": "spoiled_stock", "ms": 6100}
+{"ts": "2026-11-07T12:34:22", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:34:22", "event": "preselect", "type": "plate_leftovers", "ms": 7905}
+{"ts": "2026-11-07T12:34:26", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T12:34:26", "event": "preselect", "type": "preparation_waste", "ms": 12110}

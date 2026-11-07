@@ -275,6 +275,8 @@
         <div class="log" id="rawlog"></div>
         <div class="files">Download <a href="/events.csv" download>log as CSV</a> or <a href="/raw.jsonl" download>raw sensor data</a></div>
       </details>
+      <div style="padding:0 16px 16px"><button class="btn" id="resetBtn" type="button">Reset demo data</button>
+        <span id="resetMsg" style="color:var(--muted);font-size:13px;margin-left:8px">Archives today's records and starts an empty dashboard.</span></div>
     </section>
   </div>
 </main>
@@ -355,11 +357,22 @@ async function refresh() {
     document.getElementById("prompt").textContent = `Weighed ${g(d.waiting.weight_g)} g${d.waiting.food ? " of " + nice(d.waiting.food) : ""}. What kind of waste is it?`;
   }
   const last = d.recent[0];
+  if (!last) {                       // empty log (fresh start or after reset): back to the ready state
+    ph.style.backgroundImage = ""; ph.textContent = "No item yet";
+    document.getElementById("lastFood").textContent = "Ready";
+    document.getElementById("lastMeta").textContent = "Tip waste into the bin, then choose its type.";
+    document.getElementById("lastEur").innerHTML = "";
+  }
   if (last) {
     ph.style.backgroundImage = last.img ? `url(${last.img})` : ""; ph.textContent = last.img ? "" : "No photo";
     document.getElementById("lastFood").textContent = nice(last.food);
     document.getElementById("lastMeta").textContent = `${g(last.weight_g)} g, ${NAME[last.type] || last.type}${last.confidence === "low" ? " (guessed from time)" : ""}, ${last.timestamp.slice(11, 16)}`;
     document.getElementById("lastEur").innerHTML = `${eur(last.eur)}<small>in the bin</small>`;
+  } else {                       // nothing logged (e.g. after a reset): back to the empty state
+    ph.style.backgroundImage = ""; ph.textContent = "No item yet";
+    document.getElementById("lastFood").textContent = "Ready";
+    document.getElementById("lastMeta").textContent = "Tip waste into the bin, then choose its type.";
+    document.getElementById("lastEur").innerHTML = "";
   }
 
   // KPIs
@@ -383,6 +396,10 @@ async function refresh() {
     document.getElementById("btns").innerHTML = d.accepted
       ? `<span class="done">Added to tomorrow's briefing</span><button class="btn" onclick="post('/api/accept?undo=1')">Undo</button>`
       : `<button class="btn primary" onclick="post('/api/accept')">Add to tomorrow's briefing</button>`;
+  } else {
+    document.getElementById("why").textContent = "Suggestions appear after the first items are logged.";
+    document.getElementById("what").textContent = "";
+    document.getElementById("btns").innerHTML = "";
   }
 
   // older station.py without these fields must not break the page
@@ -457,6 +474,23 @@ async function refresh() {
     ["Overload", c.overload], ["Type guessed", c.time_rule], ["Camera saw nothing", c.no_camera]].map(([k, v]) => `<span>${k}: <b>${v}</b></span>`).join("");
   document.getElementById("rawlog").textContent = d.raw_tail.map(r => `${r.ts.slice(11)}  ${JSON.stringify(r).replace(/^\{"ts":"[^"]+",/, "{")}`).join("\n");
 }
+// two-step reset (no browser dialogs): first click arms, second click within 5 s resets
+const resetBtn = document.getElementById("resetBtn"), resetMsg = document.getElementById("resetMsg");
+let resetArmed = 0;
+resetBtn.addEventListener("click", async () => {
+  if (Date.now() - resetArmed > 5000) {
+    resetArmed = Date.now();
+    resetBtn.textContent = "Click again to reset";
+    resetBtn.classList.add("primary");
+    setTimeout(() => { if (Date.now() - resetArmed >= 5000) { resetBtn.textContent = "Reset demo data"; resetBtn.classList.remove("primary"); } }, 5100);
+    return;
+  }
+  resetArmed = 0;
+  const r = await (await fetch("/api/reset", {method: "POST"})).json();
+  resetBtn.textContent = "Reset demo data"; resetBtn.classList.remove("primary");
+  resetMsg.textContent = r.archived ? `Done. Old records saved as ${r.archived}.` : "Done. The dashboard was already empty.";
+  seen = new Set(); primed = false; refresh();
+});
 const cam = document.getElementById("cam");
 cam.onerror = () => cam.removeAttribute("src");
 setInterval(() => cam.src = "/camera.jpg?t=" + Date.now(), 1200);

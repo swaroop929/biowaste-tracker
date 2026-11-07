@@ -10,31 +10,7 @@
  *
  * Library: "HX711 Arduino Library" by Bogdan Necula (bogde) - Library Manager.
  *
- * What it does
- *   The load cell weighs a small WEIGHING TRAY / insert (never the whole bin).
- *   Every 100 ms a reading is taken and median-filtered. A disposal is a step
- *   change in weight that settles to a new stable value:
- *       baseline --(weight leaves the noise band)--> MOVING
- *       MOVING   --(stable for STABLE_MS)--> delta = stable - baseline
- *         delta >= +MIN_DISPOSAL_G  -> disposal event (one record)
- *         delta <= -MIN_DISPOSAL_G  -> removal (tray emptied) - NOT a disposal
- *         otherwise                  -> bump / noise, ignored but logged
- *   Type: press a type button up to PRESELECT_MS before tipping, or within
- *   TYPE_WINDOW_MS after the weight settles. No press -> "unassigned"; the
- *   laptop applies the time rule and marks confidence low.
- *
  * Output: one JSON object per line on Serial (115200 baud).
- *   {"event":"disposal","id":7,"weight_g":312.4,"type":"plate_leftovers","source":"button","ms":123456}
- *   {"event":"weight","g":1204.1,"stable":1,"state":"idle"}          (every 500 ms, live view)
- *   {"event":"removal"|"ignored"|"unstable"|"overload"|"info"|..., ...}
- *
- * Serial commands (send with newline):
- *   t        tare (tray must be empty)
- *   c500     calibrate with a known 500 g weight on the tray (any grams value)
- *   f420.5   set a known calibration factor (from loadcell_check: "calibrated, factor ...")
- *   i        print calibration info
- *   z        reset event counter
- *   k1/k2/k3 type key from the laptop (same as pressing button 1/2/3)
  */
 
 #include <Arduino.h>
@@ -61,6 +37,7 @@ const uint32_t UNSTABLE_MS      = 20000;  // leaning on the tray etc.
 const float    CAPACITY_G       = 4500.0; // 5 kg cell incl. tray - warn before overload
 const uint32_t STREAM_MS        = 500;
 const float    DRIFT_ALPHA      = 0.02;   // slow zero tracking while idle
+const bool     RESTORE_ZERO     = false;  // false: tare at every boot (platform must be EMPTY at power-on)
 
 // ---------------- State ----------------
 HX711 scale;
@@ -175,17 +152,19 @@ void handleSerial() {
     scale.tare(20);
     hxOffset = scale.get_offset();
     saveCal();
-    baseline = 0; winReset(); medCount = 0; state = IDLE;
+    // FIX: reset medIdx along with medCount!
+    baseline = 0; winReset(); medCount = 0; medIdx = 0; state = IDLE;
     Serial.println("{\"event\":\"info\",\"msg\":\"tared\"}");
   } else if (cmd.startsWith("c")) {
     float grams = cmd.substring(1).toFloat();
     if (grams <= 0) { Serial.println("{\"event\":\"info\",\"msg\":\"usage: c<grams>\"}"); return; }
-    scale.set_scale(1.0);
-    float raw = scale.get_units(20);       // (raw - offset) with scale 1
+    float raw = scale.get_value(20);       // average raw minus zero (same as loadcell_check)
+    if (fabs(raw) < 100) { Serial.println("{\"event\":\"info\",\"msg\":\"no signal change - weight on the tray? tare first with t\"}"); return; }
     calFactor = raw / grams;
     scale.set_scale(calFactor);
     saveCal();
-    baseline = scale.get_units(10); winReset(); medCount = 0; state = IDLE;
+    // FIX: reset medIdx along with medCount!
+    baseline = scale.get_units(10); winReset(); medCount = 0; medIdx = 0; state = IDLE;
     Serial.printf("{\"event\":\"info\",\"msg\":\"calibrated\",\"factor\":%.4f}\n", calFactor);
   } else if (cmd.startsWith("f")) {
     float f = cmd.substring(1).toFloat();   // factor from loadcell_check / calibrate (counts per gram)
@@ -193,7 +172,8 @@ void handleSerial() {
     calFactor = f;
     scale.set_scale(calFactor);
     saveCal();
-    baseline = scale.get_units(10); winReset(); medCount = 0; state = IDLE;
+    // FIX: reset medIdx along with medCount!
+    baseline = scale.get_units(10); winReset(); medCount = 0; medIdx = 0; state = IDLE;
     Serial.printf("{\"event\":\"info\",\"msg\":\"factor set\",\"factor\":%.4f}\n", calFactor);
   } else if (cmd == "i") {
     Serial.printf("{\"event\":\"info\",\"factor\":%.4f,\"offset\":%ld,\"baseline\":%.1f}\n", calFactor, hxOffset, baseline);
@@ -223,6 +203,12 @@ void setup() {
 
   scale.begin(PIN_HX_DOUT, PIN_HX_SCK);
 
+  // FIX: Make sure the scale is actually ready before we tare.
+  // Mimics the successful behavior of the working test script.
+  if (!scale.wait_ready_timeout(2000)) {
+    Serial.println("{\"event\":\"error\",\"msg\":\"HX711 not found - check wiring\"}");
+  }
+
   // Restore calibration so a power cut mid-shift does not zero a full tray.
   prefs.begin("bwt", true);
   bool haveCal = prefs.isKey("cal");
@@ -231,10 +217,10 @@ void setup() {
   prefs.end();
 
   scale.set_scale(calFactor);
-  if (haveCal) {
+  if (haveCal && RESTORE_ZERO) {
     scale.set_offset(hxOffset);
   } else {
-    scale.tare(20);
+    scale.tare(20);                       // fresh zero with the empty platform
     hxOffset = scale.get_offset();
     saveCal();
   }

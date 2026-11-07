@@ -1,0 +1,4 @@
+{"ts": "2026-11-07T12:12:10", "event": "camera_reference"}
+{"ts": "2026-11-07T12:14:19", "event": "camera", "items": [["banana", 0.5], ["unknown", 0.33], ["cherry_tomato", 0.95]]}
+{"ts": "2026-11-07T12:14:20", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T12:14:20", "event": "disposal", "id": 1, "weight_g": 42.1, "type": "plate_leftovers", "source": "button", "ms": 249672}

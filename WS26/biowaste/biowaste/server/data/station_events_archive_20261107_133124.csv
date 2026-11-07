@@ -1,0 +1,2 @@
+record_no,timestamp,weight_g,type,station_id,confidence,source,food,food_conf,image_id,device_event_id
+1,2026-11-07T13:31:09,114.0,plate_leftovers,bin-1,low,time_rule,banana+unknown,1.0,20261107_133056_681_0.jpg,1

@@ -1,0 +1,17 @@
+{"ts": "2026-11-07T12:33:25", "event": "camera_reference"}
+{"ts": "2026-11-07T12:33:33", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:33:33", "event": "preselect", "type": "spoiled_stock", "ms": 1066743}
+{"ts": "2026-11-07T12:33:40", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:33:40", "event": "preselect", "type": "spoiled_stock", "ms": 1073301}
+{"ts": "2026-11-07T12:33:48", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:33:48", "event": "preselect", "type": "spoiled_stock", "ms": 1081124}
+{"ts": "2026-11-07T12:33:48", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:33:48", "event": "preselect", "type": "spoiled_stock", "ms": 1081292}
+{"ts": "2026-11-07T12:33:48", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:33:48", "event": "preselect", "type": "spoiled_stock", "ms": 1081467}
+{"ts": "2026-11-07T12:33:48", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T12:33:48", "event": "preselect", "type": "spoiled_stock", "ms": 1081678}
+{"ts": "2026-11-07T12:33:51", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T12:33:51", "event": "preselect", "type": "preparation_waste", "ms": 1084373}
+{"ts": "2026-11-07T12:33:56", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T12:33:56", "event": "preselect", "type": "preparation_waste", "ms": 1089549}

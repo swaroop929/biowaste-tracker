@@ -44,7 +44,9 @@ CAPTURE_MAX_AGE_S = 60  # a camera picture taken at "weighed" is used for the di
 
 # Estimated purchase price per kg (wholesale-ish, EUR) - edit for your kitchen. Used for the money view.
 PRICE_EUR_PER_KG = {"apple": 2.5, "orange": 2.8, "banana": 1.9, "pasta": 1.8, "bread": 4.0, "potato": 1.2,
-                    "salad": 4.5, "vegetable_trimmings": 1.5, "rice": 2.2, "meat_fish": 14.0}
+                    "salad": 4.5, "vegetable_trimmings": 1.5, "rice": 2.2, "meat_fish": 14.0,
+                    "green_grapes": 4.0, "cherry_tomato": 6.0,
+                    "noodles": 2.0, "broccoli": 3.0}
 PRICE_DEFAULT = 3.0
 REPEAT_MIN = 2              # same food, same type, this many times today = "keeps coming back"
 REPEAT_TIPS = {   # (tip, YouTube search) - plate leftovers are never reused (hygiene), so: change dish/portion
@@ -60,7 +62,9 @@ ORDER_MIN_G = {"spoiled_stock": 80, "preparation_waste": 250}   # below this a s
 # kg CO2e per kg of food: production footprint, farm to retail (Poore & Nemecek 2018, via Our World in Data).
 # pasta/bread = "Wheat & Rye"; trimmings = "Root vegetables"; salad = "Brassicas"; meat_fish = "Poultry meat" (assumption)
 CO2E_PER_KG = {"apple": 0.43, "banana": 0.86, "orange": 0.39, "pasta": 1.57, "bread": 1.57, "rice": 4.45,
-               "potato": 0.46, "vegetable_trimmings": 0.43, "salad": 0.51, "meat_fish": 9.87}
+               "potato": 0.46, "vegetable_trimmings": 0.43, "salad": 0.51, "meat_fish": 9.87,
+               "green_grapes": 1.53, "cherry_tomato": 2.09,   # "Berries & Grapes", "Tomatoes"
+               "noodles": 1.57, "broccoli": 0.51}            # "Wheat & Rye", "Brassicas"
 CO2E_DEFAULT = 1.5     # unknown food: rough mid value, shown as approx.
 CO2E_SOURCE = "Poore & Nemecek (2018), via Our World in Data: production emissions per kg, farm to retail"
 SERVICE_PERIODS = [("Morning prep", "00:00", "11:00"), ("Lunch", "11:00", "14:30"),
@@ -346,6 +350,30 @@ def set_camera(V, frame, items):
         S["camera_jpg"] = buf.getvalue()
 
 
+def reset_data():
+    """Start a fresh demo: move today's log files to an archive name (nothing is deleted), clear the dashboard."""
+    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    archived = ""
+    with lock:
+        for path in (EVENTS_CSV, RAW_LOG):
+            if os.path.exists(path):
+                root, ext = os.path.splitext(path)
+                os.replace(path, f"{root}_archive_{stamp}{ext}")
+                if path == EVENTS_CSV:
+                    archived = os.path.basename(f"{root}_archive_{stamp}{ext}")
+        S["events"] = []
+        S["raw_tail"] = []
+        S["counters"] = {k: 0 for k in S["counters"]}
+        S["accepted"] = None
+        S["last_items"] = []
+        S["key"] = None
+    capture.update(used=True)
+    if CFG.get("phone"):
+        cam_jobs.put(("reference", None, None))
+    print(f"demo data reset (archived as {archived or 'nothing to archive'})")
+    return archived
+
+
 # ---------------- keys ----------------
 def press_key(k):
     t = KEYS.get(k)
@@ -572,6 +600,9 @@ class Handler(BaseHTTPRequestHandler):
             with lock:
                 S["accepted"] = act
             self._send(200, b"ok", "text/plain")
+        elif u.path == "/api/reset":
+            name = reset_data()
+            self._send(200, json.dumps({"archived": name}).encode(), "application/json")
         elif u.path == "/api/reference":
             cam_jobs.put(("reference", None, None))
             self._send(200, b"ok", "text/plain")

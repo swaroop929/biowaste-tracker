@@ -1,0 +1,6 @@
+record_no,timestamp,weight_g,type,station_id,confidence,source,food,food_conf,image_id,device_event_id
+1,2026-11-07T13:00:06,20.6,preparation_waste,bin-1,high,button,cherry_tomato,0.98,20261107_130004_565_0.jpg,1
+2,2026-11-07T13:00:14,13.0,plate_leftovers,bin-1,high,button,broccoli,1.0,20261107_130013_461_0.jpg,2
+3,2026-11-07T13:00:55,14.0,plate_leftovers,bin-1,high,key,noodles+banana+bread,0.88,20261107_130047_904_0.jpg,3
+4,2026-11-07T13:01:01,11.9,plate_leftovers,bin-1,high,button_pre,noodles+banana,0.99,20261107_130057_074_0.jpg,4
+5,2026-11-07T13:14:53,12.5,plate_leftovers,bin-1,low,time_rule,banana,0.67,20261107_131445_019_1.jpg,5

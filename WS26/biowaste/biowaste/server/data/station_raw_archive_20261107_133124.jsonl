@@ -1,0 +1,4 @@
+{"ts": "2026-11-07T13:16:17", "event": "camera_reference"}
+{"ts": "2026-11-07T13:30:24", "event": "info", "msg": "boot", "factor": 427.9784, "restored": 1, "baseline": 0.1}
+{"ts": "2026-11-07T13:30:59", "event": "camera", "items": [["banana", 1.0], ["unknown", 0.28], ["empty", 0.36]]}
+{"ts": "2026-11-07T13:31:03", "event": "disposal", "id": 1, "weight_g": 114.0, "type": "unassigned", "source": "none", "ms": 41628}
