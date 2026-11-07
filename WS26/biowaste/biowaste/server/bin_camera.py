@@ -10,7 +10,7 @@ Used by server.py when it is started with --camera. One "lid session" = one open
                    + server links it to the disposal(s) the scale logged during the session
 
 Camera sources (--camera):
-    http://192.168.43.1:8080   phone with the IP Webcam app (uses /shot.jpg)
+    http://192.168.23.223:8080   phone with the IP Webcam app (uses /shot.jpg)
     0, 1, ...                  USB webcam (OpenCV device index)
     replay                     test pairs from tools/vision_bench/binpairs (no hardware needed)
 """

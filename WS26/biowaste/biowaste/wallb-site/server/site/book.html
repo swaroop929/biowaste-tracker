@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a demo – Wall-B</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav"><div class="wrap">
+  <a class="brand" href="index.html"><img src="img/wallb.svg" alt="">Wall-B</a>
+  <nav><a href="index.html#how">How it works</a><a href="index.html#why">Why it matters</a><a href="index.html#pilot">Pilot</a></nav>
+  <a class="btn line small" href="/">See the live demo</a>
+</div></header>
+
+<main class="formpage"><div class="wrap formgrid">
+  <div>
+    <div class="progress"><span>1 Your kitchen</span><span class="on">2 Pick a time</span></div>
+    <h2 class="title" id="hello">Pick a time for your demo.</h2>
+    <p class="sub">30 minutes with the team. Choose online or a visit to your kitchen, then a day and a time.</p>
+  </div>
+  <div class="panel" id="panel">
+    <div class="field"><label for="how">How</label>
+      <select id="how"><option>Online video call</option><option>Visit to our kitchen</option></select></div>
+    <label>Day</label>
+    <div class="days" id="days"></div>
+    <label>Time</label>
+    <div class="slots" id="slots"></div>
+    <div class="err" id="err"></div>
+    <button class="btn solid" id="confirm" type="button">Book the demo</button>
+    <p class="note">Prototype only. No booking is sent; this shows how the flow would work.</p>
+  </div>
+</div></main>
+
+<script>
+const q = new URLSearchParams(location.search);
+const who = q.get("name"), org = q.get("org");
+if (who) document.getElementById("hello").textContent = `${who.split(" ")[0]}, pick a time for your demo.`;
+
+const days = [], d = new Date();
+while (days.length < 10) { d.setDate(d.getDate() + 1); if (d.getDay() % 6) days.push(new Date(d)); }
+const SLOTS = ["09:00", "10:30", "13:00", "14:30", "15:30", "16:30"];
+let day = null, slot = null;
+const err = document.getElementById("err");
+const dayBox = document.getElementById("days"), slotBox = document.getElementById("slots");
+dayBox.innerHTML = days.map((x, i) => `<button type="button" class="day" aria-pressed="false" data-i="${i}">
+  <small>${x.toLocaleDateString("en-GB", {weekday: "short"})}</small><b>${x.getDate()}</b><small>${x.toLocaleDateString("en-GB", {month: "short"})}</small></button>`).join("");
+function renderSlots() {
+  // a few slots are taken so it feels like a real calendar (deterministic per day)
+  slotBox.innerHTML = SLOTS.map((s, j) => { const taken = day !== null && (day * 7 + j * 3) % 5 === 0;
+    return `<button type="button" class="slot" aria-pressed="${slot === s}" data-s="${s}" ${taken ? "disabled style='opacity:.35;cursor:not-allowed'" : ""}>${s}</button>`; }).join("");
+}
+renderSlots();
+dayBox.addEventListener("click", e => { const b = e.target.closest(".day"); if (!b) return;
+  day = +b.dataset.i; slot = null; dayBox.querySelectorAll(".day").forEach(x => x.setAttribute("aria-pressed", x === b)); renderSlots(); err.textContent = ""; });
+slotBox.addEventListener("click", e => { const b = e.target.closest(".slot"); if (!b || b.disabled) return;
+  slot = b.dataset.s; slotBox.querySelectorAll(".slot").forEach(x => x.setAttribute("aria-pressed", x === b)); err.textContent = ""; });
+document.getElementById("confirm").addEventListener("click", () => {
+  if (day === null) { err.textContent = "Choose a day first"; return; }
+  if (!slot) { err.textContent = "Choose a time"; return; }
+  const when = days[day].toLocaleDateString("en-GB", {weekday: "long", day: "numeric", month: "long"});
+  document.getElementById("panel").innerHTML = `<div class="done">
+    <img src="img/wallb.svg" alt="">
+    <h2>Demo booked</h2>
+    <p>${when} at ${slot}, ${document.getElementById("how") ? document.getElementById("how").value.toLowerCase() : "online"}${org ? " for " + org.replace(/[<>&]/g, "") : ""}.</p>
+    <p class="note">Prototype: nothing was sent. In the meantime, Wall-B is running live right now.</p>
+    <p style="margin-top:18px"><a class="btn solid" href="/">See the live demo</a></p></div>`;
+});
+</script>
+</body>
+</html>

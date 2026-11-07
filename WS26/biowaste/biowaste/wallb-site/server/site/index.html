@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wall-B – the bin that knows what your kitchen throws away</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav"><div class="wrap">
+  <a class="brand" href="index.html"><img src="img/wallb.svg" alt="">Wall-B</a>
+  <nav><a href="#how">How it works</a><a href="#why">Why it matters</a><a href="#pilot">Pilot</a><a href="contact.html">Contact</a></nav>
+  <a class="btn solid small" href="contact.html">Book a demo</a>
+</div></header>
+
+<section class="hero"><div class="wrap">
+  <div>
+    <h1>Your bin knows what your kitchen wastes.</h1>
+    <p class="lead">Wall-B sits on the wall above your bio-waste bin. It weighs every tip, sees what it is and tells your team the one thing to change tomorrow morning.</p>
+    <div class="ctas">
+      <a class="btn solid" href="contact.html">Book a demo</a>
+      <a class="btn line" href="/">See the live demo</a>
+    </div>
+    <p class="fine">One touch for the cook. No tablet to fill in, no camera on people.</p>
+  </div>
+  <div class="shot">
+    <img class="photo" src="img/identified.jpg" alt="View from Wall-B's camera into a bin: banana, orange peel and apple pieces outlined and named">
+    <img class="bot" src="img/wallb.svg" alt="">
+    <div class="card" id="heroCard">
+      <div class="k">Just now, plate leftovers</div>
+      <div class="v">212 g of pasta</div>
+      <div class="s">€0.38 in the bin</div>
+    </div>
+  </div>
+</div></section>
+
+<section class="block" id="how"><div class="wrap">
+  <h2 class="title">Three things happen every time someone tips food into the bin.</h2>
+  <p class="sub">Built for the pace of a real kitchen: the cook does nothing new except press one of three big buttons.</p>
+  <div class="steps">
+    <div class="step">
+      <img src="img/bin-empty.jpg" alt="Inside of the bin, lined with white paper, seen from the camera">
+      <span class="n">1</span>
+      <h3>Weigh</h3>
+      <p>A load cell under the bin insert records the weight of each tip on its own, not just the total at the end of the day.</p>
+    </div>
+    <div class="step">
+      <img src="img/identified.jpg" alt="Camera picture with each new item outlined and named">
+      <span class="n">2</span>
+      <h3>Recognise</h3>
+      <p>The camera compares before and after, cuts out only what was added and names it. Everything runs on site, no images leave the kitchen.</p>
+    </div>
+    <div class="step">
+      <img src="img/dashboard.jpg" alt="Wall-B dashboard with today's waste, cost and a suggested action">
+      <span class="n">3</span>
+      <h3>Act</h3>
+      <p>The dashboard shows where the money goes, split into preparation, spoiled stock and plate leftovers, and suggests one change for tomorrow.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="block tint" id="why"><div class="wrap">
+  <h2 class="title">Food service throws away more than you think.</h2>
+  <p class="sub">Most kitchens only see a full bin. Without knowing what is in it and why, nobody can change it.</p>
+  <div class="facts">
+    <div class="fact"><div class="big">1.05 bn t</div><p>of food were wasted worldwide in 2022, at retail, in food service and at home.</p></div>
+    <div class="fact"><div class="big">290 m t</div><p>of that came from food service: restaurants, canteens, hotels and catering.</p></div>
+    <div class="fact"><div class="big">19 %</div><p>of all food available to consumers ends up wasted.</p></div>
+  </div>
+  <p class="source">Source: UNEP Food Waste Index Report 2024 (data for 2022).</p>
+</div></section>
+
+<section class="block" id="pilot"><div class="wrap">
+  <div class="pilot">
+    <img src="img/bin-view.jpg" alt="Real disposals in the Wall-B prototype bin: banana, orange peel and apple pieces">
+    <div>
+      <span class="tag" id="pilotTag">Sample data (live numbers appear when the station runs)</span>
+      <h2 class="title" style="margin-top:10px">Built and tested overnight at CIC Reutlingen.</h2>
+      <p class="sub" style="margin-bottom:0">A working prototype: ESP32 with a 5 kg load cell, a phone as the camera, and recognition that runs on a laptop.</p>
+      <div class="kv">
+        <div><b id="pKg">2.4 kg</b><span>wasted and logged</span></div>
+        <div><b id="pN">31</b><span>disposals recorded</span></div>
+        <div><b id="pEur">€6.10</b><span>food cost, estimated</span></div>
+        <div><b id="pTop">Plate leftovers</b><span>biggest loss stream</span></div>
+      </div>
+      <a class="btn line" href="/">Open the live dashboard</a>
+    </div>
+  </div>
+</div></section>
+
+<section class="block tint"><div class="wrap">
+  <h2 class="title">Made for busy kitchens.</h2>
+  <p class="sub">Restaurants, canteens and hotel kitchens: wherever food is prepped in volume and the bin fills up fast.</p>
+  <div class="gallery">
+    <figure><img class="ph" src="img/kitchen.jpg" alt="A commercial kitchen during service" onerror="this.outerHTML='<div class=ph>Add a photo as img/kitchen.jpg</div>'"><figcaption>Prep line during lunch service</figcaption></figure>
+    <figure><img class="ph" src="img/prep.jpg" alt="Vegetables being prepped on a cutting board" onerror="this.outerHTML='<div class=ph>Add a photo as img/prep.jpg</div>'"><figcaption>Trimmings are the biggest stream in most kitchens</figcaption></figure>
+    <figure><img class="ph" src="img/plates.jpg" alt="Plates coming back from guests" onerror="this.outerHTML='<div class=ph>Add a photo as img/plates.jpg</div>'"><figcaption>Plate leftovers show what guests do not eat</figcaption></figure>
+  </div>
+</div></section>
+
+<section class="block"><div class="wrap">
+  <div class="cta">
+    <h2>See what your bin would tell you in one week.</h2>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <a class="btn solid" href="contact.html">Book a demo</a>
+      <a class="btn line" href="/">See the live demo</a>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <span>Wall-B, a prototype by Team Wall-B for the Corporate Innovation Challenge WS26, HS Reutlingen, with WebMeister360.</span>
+  <span><a href="contact.html">Contact</a></span>
+</div></footer>
+
+<script>
+const TYPE = {preparation_waste: "Preparation", spoiled_stock: "Spoiled stock", plate_leftovers: "Plate leftovers"};
+const nice = s => String(s || "").replaceAll("_", " ").replaceAll("+", " and ");
+fetch("/api/state").then(r => r.json()).then(d => {
+  if (!d.count) return;
+  document.getElementById("pilotTag").textContent = "Live from the prototype, today";
+  document.getElementById("pKg").textContent = (d.total_g / 1000).toLocaleString("en-GB", {maximumFractionDigits: 2}) + " kg";
+  document.getElementById("pN").textContent = d.count;
+  document.getElementById("pEur").textContent = "€" + d.cost_eur.toFixed(2);
+  document.getElementById("pTop").textContent = d.biggest ? TYPE[d.biggest] : "–";
+  const e = d.recent[0];
+  if (e) document.getElementById("heroCard").innerHTML =
+    `<div class="k">Latest, ${TYPE[e.type] ? TYPE[e.type].toLowerCase() : e.type}</div><div class="v">${Math.round(e.weight_g)} g${["not_seen","no_camera"].includes(e.food) ? "" : " of " + nice(e.food)}</div><div class="s">€${e.eur.toFixed(2)} in the bin</div>`;
+}).catch(() => {});
+</script>
+</body>
+</html>

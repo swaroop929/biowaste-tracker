@@ -2,7 +2,7 @@
 """
 Collect your own benchmark photos with the real setup (phone on the IP Webcam app above the tray).
 
-    python capture.py --phone http://192.168.43.1:8080
+    python capture.py --phone http://192.168.23.223:8080
 
 Per item: Enter -> BEFORE photo, put the food on the tray, Enter -> AFTER photo, then type what is on it.
 Saves exactly what vision.py would classify (the changed region of the tray) to own/images/ and appends
@@ -61,7 +61,7 @@ def ask_labels(vocab):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--phone", required=True, help="IP Webcam address, e.g. http://192.168.43.1:8080")
+    ap.add_argument("--phone", required=True, help="IP Webcam address, e.g. http://192.168.23.223:8080")
     a = ap.parse_args()
     img_dir = os.path.join(OWN, "images")
     os.makedirs(img_dir, exist_ok=True)

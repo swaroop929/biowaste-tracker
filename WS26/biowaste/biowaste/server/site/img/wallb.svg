@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 140" role="img" aria-label="Wall-B, a bin-shaped robot with a camera eye on a mast standing on a scale">
+  <!-- scale base -->
+  <rect x="14" y="124" width="92" height="10" rx="3" fill="#16413a"/>
+  <rect x="22" y="134" width="12" height="4" rx="1" fill="#16413a"/>
+  <rect x="86" y="134" width="12" height="4" rx="1" fill="#16413a"/>
+  <!-- bin body -->
+  <path d="M26 58 H94 L88 122 H32 Z" fill="#2f8f6a"/>
+  <path d="M40 66 L44 114 M60 66 V114 M80 66 L76 114" stroke="#26775a" stroke-width="3" stroke-linecap="round"/>
+  <!-- lid -->
+  <rect x="20" y="48" width="80" height="12" rx="4" fill="#16413a"/>
+  <rect x="50" y="42" width="20" height="8" rx="3" fill="#16413a"/>
+  <!-- mast -->
+  <rect x="57" y="20" width="6" height="24" rx="2" fill="#16413a"/>
+  <!-- camera eye -->
+  <circle cx="60" cy="16" r="13" fill="#ffffff" stroke="#16413a" stroke-width="4"/>
+  <circle cx="60" cy="16" r="6" fill="#16413a"/>
+  <circle cx="62.5" cy="13.5" r="2" fill="#7fd6ad"/>
+  <!-- display smile -->
+  <rect x="44" y="78" width="32" height="18" rx="4" fill="#e8f6ef"/>
+  <path d="M51 85 q9 7 18 0" stroke="#16413a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+</svg>

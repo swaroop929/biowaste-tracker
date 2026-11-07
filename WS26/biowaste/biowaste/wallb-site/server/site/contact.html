@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact – Wall-B</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav"><div class="wrap">
+  <a class="brand" href="index.html"><img src="img/wallb.svg" alt="">Wall-B</a>
+  <nav><a href="index.html#how">How it works</a><a href="index.html#why">Why it matters</a><a href="index.html#pilot">Pilot</a></nav>
+  <a class="btn line small" href="/">See the live demo</a>
+</div></header>
+
+<main class="formpage"><div class="wrap formgrid">
+  <div>
+    <div class="progress"><span class="on">1 Your kitchen</span><span>2 Pick a time</span></div>
+    <h2 class="title">Tell us about your kitchen.</h2>
+    <p class="sub">We will show you Wall-B on a bin like yours and estimate what you could save. The demo takes 30 minutes, online or on site.</p>
+    <ul class="check">
+      <li>See the camera, scale and dashboard working live</li>
+      <li>Get a first estimate of your waste cost per month</li>
+      <li>No hardware to buy for the pilot</li>
+    </ul>
+  </div>
+  <form class="panel" id="form" novalidate>
+    <div class="row2">
+      <div class="field"><label for="name">Your name</label><input id="name" autocomplete="name"><div class="err" id="e-name"></div></div>
+      <div class="field"><label for="role">Role</label>
+        <select id="role"><option>Head chef</option><option>Kitchen manager</option><option>F&amp;B director</option><option>Owner</option><option>Sustainability lead</option><option>Other</option></select></div>
+    </div>
+    <div class="field"><label for="org">Restaurant, canteen or hotel</label><input id="org" autocomplete="organization"><div class="err" id="e-org"></div></div>
+    <div class="field"><label for="email">Work email</label><input id="email" type="email" autocomplete="email"><div class="err" id="e-email"></div></div>
+    <div class="row2">
+      <div class="field"><label for="type">Kitchen type</label>
+        <select id="type"><option>Restaurant</option><option>Canteen</option><option>Hotel</option><option>Hospital or care home</option><option>Catering</option></select></div>
+      <div class="field"><label for="meals">Meals per day</label>
+        <select id="meals"><option>Under 100</option><option selected>100 to 300</option><option>300 to 1,000</option><option>Over 1,000</option></select></div>
+    </div>
+    <div class="field"><label for="msg">Anything we should know? (optional)</label><textarea id="msg" rows="3"></textarea></div>
+    <button class="btn solid" type="submit">Continue to pick a time</button>
+    <p class="note">This is a prototype from a hackathon. Nothing you type here is sent anywhere.</p>
+  </form>
+</div></main>
+
+<script>
+const f = document.getElementById("form");
+const req = [["name", "Enter your name"], ["org", "Enter your kitchen's name"], ["email", "Enter a valid email address"]];
+f.addEventListener("input", e => { const el = document.getElementById("e-" + e.target.id); if (el) el.textContent = ""; });
+f.addEventListener("submit", e => {
+  e.preventDefault();
+  let ok = true;
+  for (const [id, msg] of req) {
+    const v = document.getElementById(id).value.trim();
+    const bad = !v || (id === "email" && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v));
+    document.getElementById("e-" + id).textContent = bad ? msg : "";
+    if (bad && ok) { document.getElementById(id).focus(); ok = false; }
+  }
+  if (!ok) return;
+  const v = id => document.getElementById(id).value.trim();
+  const p = new URLSearchParams({name: v("name"), org: v("org"), type: v("type")});
+  location.href = "book.html?" + p.toString();
+});
+</script>
+</body>
+</html>

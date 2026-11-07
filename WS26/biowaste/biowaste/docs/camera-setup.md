@@ -93,7 +93,7 @@ otherwise SigLIP 2 base (1.5 GB). Do this once on good Wi-Fi before the event. O
 ```bash
 cd server
 python server.py --port COM5 --camera 0                         # scale + USB webcam 0
-python server.py --port COM5 --camera http://192.168.43.1:8080  # scale + phone (IP Webcam)
+python server.py --port COM5 --camera http://192.168.23.223:8080  # scale + phone (IP Webcam)
 python server.py --port COM5 --camera 0 --vision-model base     # force the small model
 ```
 

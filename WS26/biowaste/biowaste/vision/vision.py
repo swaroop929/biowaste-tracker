@@ -12,7 +12,7 @@ Setup
 
 Modes
     python vision.py --image apple.jpg                 classify one photo (no phone needed)
-    python vision.py --phone http://192.168.43.1:8080  KEY-PRESS mode (default): throw something in,
+    python vision.py --phone http://192.168.23.223:8080  KEY-PRESS mode (default): throw something in,
                                                         press Enter -> it names what was added
     python vision.py --phone ... --watch               automatic mode: detects each new item by motion
     python vision.py --phone ... --profile demo_kitchen   only this restaurant's items (+ non_food/empty)
@@ -726,7 +726,7 @@ vision/last.jpg (and the live view) shows each detected item with a box; blue = 
 def main():
     global MODEL, BURST
     ap = argparse.ArgumentParser()
-    ap.add_argument("--phone", help="IP Webcam address, e.g. http://192.168.43.1:8080")
+    ap.add_argument("--phone", help="IP Webcam address, e.g. http://192.168.23.223:8080")
     ap.add_argument("--image", help="classify a single image file")
     ap.add_argument("--watch", action="store_true", help="automatic: detect each new item by motion")
     ap.add_argument("--model", help="e.g. openai/clip-vit-base-patch32 (fast) or openai/clip-vit-large-patch14 (accurate)")

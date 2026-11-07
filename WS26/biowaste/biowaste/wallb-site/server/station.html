@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wall-B – Bin 1</title>
+<style>
+  :root {
+    --bg: #eef0f2; --surface: #ffffff; --line: #d9dee3; --line-soft: #eceff2;
+    --ink: #1c2329; --muted: #5d6873; --faint: #8b959e;
+    --brand: #16413a;                  /* deep green-black, product chrome */
+    --prep: #2468b4; --prep-bg: #e5eef8;
+    --spoiled: #c2462b; --spoiled-bg: #f9e8e3;
+    --plate: #1d8a5e; --plate-bg: #e1f2ea;
+    --money: #16413a;
+    --wait: #f4c542; --wait-bg: #fff6d8;
+    --font: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 var(--font); }
+  button { font: inherit; }
+
+  .topbar { background: var(--brand); color: #fff; display: flex; align-items: center; gap: 20px; padding: 0 22px; height: 54px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; }
+  .logo svg { display: block; }
+  .site { color: #b9cdc8; font-size: 14px; }
+  .chips { margin-left: auto; display: flex; gap: 8px; }
+  .chip { font-size: 13px; padding: 4px 10px 4px 9px; border-radius: 14px; background: rgba(255,255,255,.1); color: #dbe7e4; white-space: nowrap; }
+  .chip i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #9aa5ad; margin-right: 6px; vertical-align: 1px; }
+  .chip.on i { background: #5fd39a; }
+
+  .page { display: grid; grid-template-columns: minmax(340px, 5fr) 7fr; gap: 18px; align-items: start; padding: 18px 22px 30px; max-width: 1440px; margin: 0 auto; }
+  @media (max-width: 980px) { .page { grid-template-columns: 1fr; } }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+  .panel > h2 { font-size: 14px; font-weight: 600; margin: 0; padding: 12px 16px; border-bottom: 1px solid var(--line-soft); display: flex; justify-content: space-between; align-items: center; }
+  .panel > h2 span { font-weight: 400; color: var(--muted); }
+  .pad { padding: 16px; }
+
+  /* cook terminal */
+  .terminal { display: flex; flex-direction: column; gap: 14px; }
+  .last { display: grid; grid-template-columns: 132px 1fr; gap: 16px; align-items: center; }
+  .last .ph { width: 132px; height: 132px; border-radius: 4px; background: #f3f5f6 center/cover no-repeat; border: 1px solid var(--line-soft); display: grid; place-items: center; color: var(--faint); font-size: 13px; text-align: center; }
+  .last .food { font-size: 26px; font-weight: 600; line-height: 1.15; text-transform: capitalize; }
+  .last .meta { color: var(--muted); margin-top: 2px; }
+  .last .eur { margin-top: 10px; font-size: 34px; font-weight: 700; color: var(--money); line-height: 1; font-variant-numeric: tabular-nums; }
+  .last .eur small { font-size: 14px; font-weight: 400; color: var(--muted); margin-left: 6px; }
+  .prompt { display: none; background: var(--wait-bg); border: 1px solid var(--wait); border-radius: 4px; padding: 10px 12px; font-weight: 600; }
+  body.waiting .prompt { display: block; }
+  .types { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .type { border: 2px solid transparent; border-radius: 6px; padding: 12px 10px; text-align: left; cursor: pointer; color: #fff; }
+  .type b { font-size: 22px; margin-right: 6px; }
+  .type span { font-weight: 600; }
+  .type small { display: block; opacity: .85; font-size: 12px; margin-top: 2px; }
+  .type:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+  .type.armed { border-color: #fff; box-shadow: 0 0 0 2px var(--ink); }
+  .type:active { filter: brightness(.9); }
+  .t1 { background: var(--prep); } .t2 { background: var(--spoiled); } .t3 { background: var(--plate); }
+  body.waiting .type { box-shadow: 0 0 0 3px var(--wait); }
+  .cam { position: relative; background: #1d2328; border-radius: 4px; overflow: hidden; }
+  .cam img { display: block; width: 100%; aspect-ratio: 16/9; object-fit: contain; }
+  .cam .bar { display: flex; justify-content: space-between; align-items: center; padding: 7px 10px; color: #c5cdd3; font-size: 13px; background: #161b1f; }
+  .cam button { color: #fff; background: transparent; border: 1px solid #56616a; border-radius: 4px; padding: 3px 9px; cursor: pointer; font-size: 13px; }
+  .scale-now { display: flex; justify-content: space-between; color: var(--muted); font-size: 14px; }
+  .scale-now b { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+  /* manager */
+  .right { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .kpi { padding: 14px 16px; border-right: 1px solid var(--line-soft); }
+  .kpi:last-child { border-right: 0; }
+  .kpi .v { font-size: 24px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .kpi .l { color: var(--muted); font-size: 13px; }
+  @media (max-width: 640px) { .kpis { grid-template-columns: repeat(2, 1fr); } .kpi:nth-child(2) { border-right: 0; } }
+
+  .two { display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; }
+  @media (max-width: 1180px) { .two { grid-template-columns: 1fr; } }
+  .rank { list-style: none; margin: 0; padding: 6px 16px 14px; }
+  .rank li { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 7px 0; border-bottom: 1px solid var(--line-soft); }
+  .rank li:last-child { border-bottom: 0; }
+  .rank .nm { text-transform: capitalize; font-weight: 500; }
+  .rank .nb { color: var(--muted); font-variant-numeric: tabular-nums; text-align: right; font-size: 14px; }
+  .rank .track { grid-column: 1 / -1; height: 8px; background: var(--line-soft); border-radius: 2px; display: flex; overflow: hidden; }
+  .rank .track div { height: 100%; }
+  .legend { display: flex; gap: 14px; font-size: 13px; color: var(--muted); padding: 0 16px 12px; flex-wrap: wrap; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+
+  .action { padding: 16px; display: flex; flex-direction: column; gap: 10px; height: calc(100% - 45px); }
+  .action .why { color: var(--muted); font-size: 14px; }
+  .action .what { font-size: 17px; font-weight: 500; }
+  .action .btns { display: flex; gap: 8px; margin-top: auto; }
+  .btn { border-radius: 4px; padding: 7px 14px; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+  .btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .done { color: var(--plate); font-weight: 600; }
+
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th { text-align: left; font-weight: 500; color: var(--muted); font-size: 13px; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+  td { padding: 6px 12px; border-bottom: 1px solid var(--line-soft); vertical-align: middle; }
+  tr:last-child td { border-bottom: 0; }
+  .num { text-align: right; }
+  .thumb { width: 40px; height: 40px; border-radius: 3px; background: #f3f5f6 center/cover no-repeat; border: 1px solid var(--line-soft); }
+  .badge { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+  .b-preparation_waste { background: var(--prep-bg); color: var(--prep); }
+  .b-spoiled_stock { background: var(--spoiled-bg); color: var(--spoiled); }
+  .b-plate_leftovers { background: var(--plate-bg); color: var(--plate); }
+  .guess { color: #9a6700; font-size: 12px; }
+  .cap { text-transform: capitalize; }
+  tr.fresh td { background: #fffbea; }
+  .empty { color: var(--muted); padding: 18px 16px; }
+
+  .chart { padding: 6px 16px 10px; }
+  .chart svg text { fill: var(--muted); font: 12px var(--font); }
+  .tip { position: fixed; pointer-events: none; background: var(--ink); color: #fff; padding: 6px 9px; border-radius: 4px; font-size: 13px; display: none; z-index: 9; }
+  details { padding: 10px 16px 14px; }
+  summary { cursor: pointer; color: var(--muted); font-size: 14px; }
+  .counts { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 10px 0 6px; font-size: 14px; }
+  .log { font: 12px/1.5 Consolas, monospace; color: var(--muted); max-height: 180px; overflow: auto; white-space: pre; }
+  .files { font-size: 14px; margin-top: 6px; }
+  a { color: var(--prep); }
+  .note { color: var(--faint); font-size: 12px; padding: 0 16px 12px; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="logo">
+    <img src="/site/img/wallb.svg" alt="" width="20" height="23" style="background:#fff;border-radius:4px;padding:1px">
+    <a href="/site/" style="color:#fff;text-decoration:none">Wall-B</a>
+  </div>
+  <div class="site" id="site">Demo Kitchen Reutlingen, Bin 1</div>
+  <div class="chips"><span class="chip" id="chipScale"><i></i>Scale</span><span class="chip" id="chipCam"><i></i>Camera</span></div>
+</div>
+
+<main class="page">
+  <section class="panel">
+    <h2>At the bin <span id="clock"></span></h2>
+    <div class="pad terminal">
+      <div class="last" id="last">
+        <div class="ph" id="lastPh">No item yet</div>
+        <div>
+          <div class="food" id="lastFood">Ready</div>
+          <div class="meta" id="lastMeta">Tip waste into the bin, then choose its type.</div>
+          <div class="eur" id="lastEur"></div>
+        </div>
+      </div>
+      <div class="prompt" id="prompt">Weighed. What kind of waste is it?</div>
+      <div class="types" role="group" aria-label="Waste type">
+        <button class="type t1" data-t="preparation_waste" onclick="pick(1)"><b>1</b><span>Preparation</span><small>Trimmings, surplus</small></button>
+        <button class="type t2" data-t="spoiled_stock" onclick="pick(2)"><b>2</b><span>Spoiled</span><small>Expired, gone off</small></button>
+        <button class="type t3" data-t="plate_leftovers" onclick="pick(3)"><b>3</b><span>Plate</span><small>Back from guests</small></button>
+      </div>
+      <div class="scale-now"><span>On the scale</span><span><b id="live">0</b> g, <span id="liveState">starting</span></span></div>
+      <div class="cam">
+        <img id="cam" alt="Camera view into the bin with new items outlined">
+        <div class="bar"><span id="camState">Camera starting</span><button type="button" onclick="post('/api/reference')">Bin emptied</button></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="right">
+    <section class="panel kpis">
+      <div class="kpi"><div class="v" id="kKg">0 kg</div><div class="l">Wasted today</div></div>
+      <div class="kpi"><div class="v" id="kEur">€0.00</div><div class="l">Food cost in the bin</div></div>
+      <div class="kpi"><div class="v" id="kCo2">0 kg</div><div class="l">CO₂e, approx.</div></div>
+      <div class="kpi"><div class="v" id="kN">0</div><div class="l">Items logged</div></div>
+    </section>
+
+    <div class="two">
+      <section class="panel">
+        <h2>Thrown away most <span>today, by weight</span></h2>
+        <ul class="rank" id="rank"><li class="empty" style="display:block">Nothing logged yet.</li></ul>
+        <div class="legend"><span><i style="background:var(--prep)"></i>Preparation</span><span><i style="background:var(--spoiled)"></i>Spoiled</span><span><i style="background:var(--plate)"></i>Plate</span></div>
+      </section>
+      <section class="panel">
+        <h2>Suggested for tomorrow</h2>
+        <div class="action">
+          <div class="why" id="why">Suggestions appear after the first items are logged.</div>
+          <div class="what" id="what"></div>
+          <div class="btns" id="btns"></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel">
+      <h2>Log <span id="logCount"></span></h2>
+      <table><thead><tr><th></th><th>Time</th><th>Item</th><th>Type</th><th class="num">Weight</th><th class="num">Cost</th></tr></thead>
+        <tbody id="rows"><tr><td colspan="6" class="empty">Each item appears here with its photo.</td></tr></tbody></table>
+    </section>
+
+    <section class="panel">
+      <h2>Through the day <span>grams per hour</span></h2>
+      <div class="chart"><svg id="hourly" width="100%" height="170" role="img" aria-label="Grams per hour by waste type"></svg></div>
+      <div class="note">Costs use estimated prices per kg; CO₂e uses an average of 2.5 kg per kg of food waste.</div>
+      <details>
+        <summary>Sensor log</summary>
+        <div class="counts" id="counters"></div>
+        <div class="log" id="rawlog"></div>
+        <div class="files">Download <a href="/events.csv" download>log as CSV</a> or <a href="/raw.jsonl" download>raw sensor data</a></div>
+      </details>
+    </section>
+  </div>
+</main>
+<div class="tip" id="tip"></div>
+
+<script>
+const TYPES = ["preparation_waste", "spoiled_stock", "plate_leftovers"];
+const NAME = {preparation_waste: "Preparation", spoiled_stock: "Spoiled", plate_leftovers: "Plate"};
+const COL = {preparation_waste: "var(--prep)", spoiled_stock: "var(--spoiled)", plate_leftovers: "var(--plate)"};
+const g = n => Math.round(n).toLocaleString("en-GB");
+const eur = n => "€" + Number(n).toFixed(2);
+const kg = n => (n / 1000).toLocaleString("en-GB", {maximumFractionDigits: n < 10000 ? 2 : 1}) + " kg";
+const nice = s => ["not_seen", "no_camera"].includes(s) ? "Not recognised" : String(s || "").replaceAll("_", " ").replaceAll("+", " and ");
+const tip = document.getElementById("tip");
+let seen = new Set(), primed = false;
+
+function post(u) { return fetch(u, {method: "POST"}); }
+function pick(k) { post("/api/key?k=" + k); }
+document.addEventListener("keydown", e => { if (["1", "2", "3"].includes(e.key) && !e.repeat && !e.target.closest("input,textarea")) pick(e.key); });
+function chip(id, on, label) { const c = document.getElementById(id); c.classList.toggle("on", on); c.lastChild.textContent = label; }
+
+function drawHourly(rows) {
+  const svg = document.getElementById("hourly");
+  const W = svg.clientWidth || 600, H = 170, L = 52, B = 22, T = 6;
+  const hrs = []; for (let h = 6; h <= 23; h++) hrs.push(h);
+  const by = Object.fromEntries(rows.map(r => [r.hour, r]));
+  const max = Math.max(100, ...rows.map(r => TYPES.reduce((s, t) => s + r[t], 0)));
+  const st = Math.pow(10, Math.floor(Math.log10(max))), top = Math.ceil(max / st) * st;
+  const bw = (W - L) / hrs.length, w = Math.max(5, Math.min(18, bw - 6)), y = v => T + (H - T - B) * (1 - v / top);
+  let s = "";
+  [0, .5, 1].forEach(f => s += `<line x1="${L}" x2="${W}" y1="${y(top * f)}" y2="${y(top * f)}" stroke="${f ? "var(--line-soft)" : "var(--line)"}"/>` +
+    (f ? `<text x="${L - 6}" y="${y(top * f) + 4}" text-anchor="end">${g(top * f)} g</text>` : ""));
+  hrs.forEach((h, i) => {
+    const x = L + i * bw + (bw - w) / 2, r = by[h];
+    if (i % 3 === 0) s += `<text x="${x + w / 2}" y="${H - 5}" text-anchor="middle">${h}:00</text>`;
+    if (!r) return;
+    let acc = 0;
+    TYPES.filter(t => r[t] > 0).forEach(t => { const y1 = y(acc + r[t]), y0 = y(acc); acc += r[t];
+      s += `<rect x="${x}" y="${y1}" width="${w}" height="${Math.max(1, y0 - y1 - 1)}" fill="${COL[t]}"/>`; });
+    const body = `${h}:00–${h + 1}:00: ${g(acc)} g<br>` + TYPES.filter(t => r[t] > 0).map(t => `${NAME[t]} ${g(r[t])} g`).join("<br>");
+    s += `<rect x="${L + i * bw}" y="${T}" width="${bw}" height="${H - T - B}" fill="transparent" data-tip="${encodeURIComponent(body)}"/>`;
+  });
+  svg.innerHTML = s;
+  svg.querySelectorAll("[data-tip]").forEach(el => {
+    el.onmousemove = ev => { tip.innerHTML = decodeURIComponent(el.dataset.tip); tip.style.display = "block"; tip.style.left = ev.clientX + 12 + "px"; tip.style.top = ev.clientY + 12 + "px"; };
+    el.onmouseleave = () => tip.style.display = "none";
+  });
+}
+
+async function refresh() {
+  let d;
+  try { d = await (await fetch("/api/state")).json(); }
+  catch { chip("chipScale", false, "Station offline"); chip("chipCam", false, "Camera"); return; }
+  document.getElementById("clock").textContent = new Date().toLocaleTimeString("en-GB", {hour: "2-digit", minute: "2-digit"});
+  chip("chipScale", d.live.connected, d.live.connected ? "Scale connected" : (d.device.startsWith("fake") ? "Test mode" : "Scale offline"));
+  chip("chipCam", d.camera !== "off" && !d.camera.includes("not"), d.camera === "off" ? "No camera" : d.camera.includes("not") ? "Camera offline" : "Camera on");
+
+  document.getElementById("live").textContent = g(d.live.g || 0);
+  document.getElementById("liveState").textContent = !d.live.connected ? "no signal" : d.live.pending ? "weighed" : d.live.state === "moving" ? "settling" : "ready";
+  document.getElementById("camState").textContent = d.camera === "off" ? "No camera connected" : "New items are outlined";
+  document.body.classList.toggle("waiting", !!d.waiting);
+  document.querySelectorAll(".type").forEach(b => b.classList.toggle("armed", b.dataset.t === d.armed));
+
+  // last item card
+  const ph = document.getElementById("lastPh");
+  if (d.waiting) {
+    document.getElementById("prompt").textContent = `Weighed ${g(d.waiting.weight_g)} g${d.waiting.food ? " of " + nice(d.waiting.food) : ""}. What kind of waste is it?`;
+  }
+  const last = d.recent[0];
+  if (last) {
+    ph.style.backgroundImage = last.img ? `url(${last.img})` : ""; ph.textContent = last.img ? "" : "No photo";
+    document.getElementById("lastFood").textContent = nice(last.food);
+    document.getElementById("lastMeta").textContent = `${g(last.weight_g)} g, ${NAME[last.type] || last.type}${last.confidence === "low" ? " (guessed from time)" : ""}, ${last.timestamp.slice(11, 16)}`;
+    document.getElementById("lastEur").innerHTML = `${eur(last.eur)}<small>in the bin</small>`;
+  }
+
+  // KPIs
+  document.getElementById("kKg").textContent = kg(d.total_g);
+  document.getElementById("kEur").textContent = eur(d.cost_eur);
+  document.getElementById("kCo2").textContent = d.co2_kg.toLocaleString("en-GB", {maximumFractionDigits: 1}) + " kg";
+  document.getElementById("kN").textContent = d.count;
+
+  // ranking
+  const max = d.rank.length ? d.rank[0].g : 1;
+  document.getElementById("rank").innerHTML = d.rank.length ? d.rank.map(r => `<li><span class="nm">${nice(r.food)}</span>
+      <span class="nb">${g(r.g)} g, ${eur(r.eur)}</span>
+      <span class="track">${TYPES.filter(t => r.by_type[t] > 0).map(t => `<div style="width:${100 * r.by_type[t] / max}%;background:${COL[t]}"></div>`).join("")}</span></li>`).join("")
+    : `<li class="empty" style="display:block">Nothing logged yet.</li>`;
+
+  // action
+  if (d.biggest) {
+    const tf = d.top_food ? `, mostly ${nice(d.top_food)}` : "";
+    document.getElementById("why").textContent = `${NAME[d.biggest]} waste is ${Math.round(d.shares_pct[d.biggest])}% of today's total${tf}.`;
+    document.getElementById("what").textContent = d.action;
+    document.getElementById("btns").innerHTML = d.accepted
+      ? `<span class="done">Added to tomorrow's briefing</span><button class="btn" onclick="post('/api/accept?undo=1')">Undo</button>`
+      : `<button class="btn primary" onclick="post('/api/accept')">Add to tomorrow's briefing</button>`;
+  }
+
+  // log table
+  document.getElementById("logCount").textContent = d.count ? `${d.count} today, latest first` : "";
+  document.getElementById("rows").innerHTML = d.recent.length ? d.recent.map(e => `<tr class="${primed && !seen.has(e.record_no) ? "fresh" : ""}">
+      <td><div class="thumb" style="${e.img ? `background-image:url(${e.img})` : ""}"></div></td>
+      <td>${e.timestamp.slice(11, 16)}</td>
+      <td class="cap">${nice(e.food)}${e.food_conf ? ` <span class="guess" style="color:var(--faint)">${Math.round(e.food_conf * 100)}%</span>` : ""}</td>
+      <td><span class="badge b-${e.type}">${NAME[e.type] || e.type}</span>${e.confidence === "low" ? ` <span class="guess">guessed</span>` : ""}</td>
+      <td class="num">${g(e.weight_g)} g</td><td class="num">${eur(e.eur)}</td></tr>`).join("")
+    : `<tr><td colspan="6" class="empty">Each item appears here with its photo.</td></tr>`;
+  d.recent.forEach(e => seen.add(e.record_no)); primed = true;
+
+  drawHourly(d.hourly);
+  const c = d.counters;
+  document.getElementById("counters").innerHTML = [["Bin emptied", c.removal], ["Bumps ignored", c.ignored], ["Unstable", c.unstable],
+    ["Overload", c.overload], ["Type guessed", c.time_rule], ["Camera saw nothing", c.no_camera]].map(([k, v]) => `<span>${k}: <b>${v}</b></span>`).join("");
+  document.getElementById("rawlog").textContent = d.raw_tail.map(r => `${r.ts.slice(11)}  ${JSON.stringify(r).replace(/^\{"ts":"[^"]+",/, "{")}`).join("\n");
+}
+const cam = document.getElementById("cam");
+cam.onerror = () => cam.removeAttribute("src");
+setInterval(() => cam.src = "/camera.jpg?t=" + Date.now(), 1200);
+refresh(); setInterval(refresh, 1000);
+</script>
+</body>
+</html>

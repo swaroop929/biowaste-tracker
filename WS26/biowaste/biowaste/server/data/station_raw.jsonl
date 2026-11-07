@@ -1,0 +1,68 @@
+{"ts": "2026-11-07T08:34:49", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T08:39:09", "event": "camera_reference"}
+{"ts": "2026-11-07T08:39:12", "event": "camera_reference"}
+{"ts": "2026-11-07T08:39:16", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T08:39:16", "event": "preselect", "type": "preparation_waste", "ms": 267806}
+{"ts": "2026-11-07T08:39:20", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T08:39:20", "event": "preselect", "type": "preparation_waste", "ms": 271389}
+{"ts": "2026-11-07T08:39:29", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T08:39:29", "event": "preselect", "type": "spoiled_stock", "ms": 280632}
+{"ts": "2026-11-07T08:39:31", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T08:39:31", "event": "preselect", "type": "spoiled_stock", "ms": 282625}
+{"ts": "2026-11-07T08:39:56", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T08:39:56", "event": "preselect", "type": "plate_leftovers", "ms": 307137}
+{"ts": "2026-11-07T08:40:00", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T08:40:00", "event": "preselect", "type": "plate_leftovers", "ms": 311560}
+{"ts": "2026-11-07T08:44:49", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T08:45:16", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T08:45:16", "event": "preselect", "type": "preparation_waste", "ms": 26820}
+{"ts": "2026-11-07T08:45:41", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T08:45:41", "event": "preselect", "type": "spoiled_stock", "ms": 51790}
+{"ts": "2026-11-07T08:48:20", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T08:48:37", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T08:48:43", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T08:48:43", "event": "preselect", "type": "preparation_waste", "ms": 6127}
+{"ts": "2026-11-07T08:49:06", "event": "camera", "items": [["banana", 0.53]]}
+{"ts": "2026-11-07T08:49:06", "event": "camera", "items": []}
+{"ts": "2026-11-07T08:49:43", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T08:49:43", "event": "preselect", "type": "plate_leftovers", "ms": 66546}
+{"ts": "2026-11-07T08:49:54", "event": "camera", "items": [["banana", 0.99]]}
+{"ts": "2026-11-07T08:49:55", "event": "camera", "items": []}
+{"ts": "2026-11-07T08:50:04", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T08:50:04", "event": "preselect", "type": "preparation_waste", "ms": 86981}
+{"ts": "2026-11-07T08:50:08", "event": "camera", "items": [["banana", 1.0]]}
+{"ts": "2026-11-07T08:50:40", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T08:50:40", "event": "preselect", "type": "plate_leftovers", "ms": 123214}
+{"ts": "2026-11-07T08:50:49", "event": "camera", "items": [["orange", 0.97]]}
+{"ts": "2026-11-07T08:50:50", "event": "camera", "items": []}
+{"ts": "2026-11-07T08:53:15", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T08:53:50", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T08:53:57", "event": "camera_reference"}
+{"ts": "2026-11-07T08:53:58", "event": "camera_reference"}
+{"ts": "2026-11-07T08:54:33", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T08:54:33", "event": "preselect", "type": "plate_leftovers", "ms": 42447}
+{"ts": "2026-11-07T08:55:07", "event": "camera", "items": [["banana", 1.0]]}
+{"ts": "2026-11-07T08:55:49", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T08:55:49", "event": "preselect", "type": "preparation_waste", "ms": 118959}
+{"ts": "2026-11-07T08:55:52", "event": "camera", "items": [["orange", 0.84]]}
+{"ts": "2026-11-07T08:56:19", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T08:56:19", "event": "preselect", "type": "preparation_waste", "ms": 148451}
+{"ts": "2026-11-07T08:56:24", "event": "camera", "items": [["apple", 0.74]]}
+{"ts": "2026-11-07T08:56:38", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T08:56:38", "event": "preselect", "type": "spoiled_stock", "ms": 167799}
+{"ts": "2026-11-07T08:56:43", "event": "camera", "items": [["orange", 0.99], ["bread", 0.99]]}
+{"ts": "2026-11-07T08:58:18", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T08:58:18", "event": "preselect", "type": "spoiled_stock", "ms": 267505}
+{"ts": "2026-11-07T08:58:23", "event": "camera", "items": [["banana", 0.76]]}
+{"ts": "2026-11-07T09:19:50", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T09:25:26", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T09:44:11", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 0.0}
+{"ts": "2026-11-07T09:59:40", "event": "key", "type": "preparation_waste"}
+{"ts": "2026-11-07T09:59:40", "event": "preselect", "type": "preparation_waste", "ms": 928102}
+{"ts": "2026-11-07T09:59:40", "event": "key", "type": "spoiled_stock"}
+{"ts": "2026-11-07T09:59:40", "event": "preselect", "type": "spoiled_stock", "ms": 928625}
+{"ts": "2026-11-07T09:59:41", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T09:59:41", "event": "preselect", "type": "plate_leftovers", "ms": 929885}
+{"ts": "2026-11-07T09:59:42", "event": "key", "type": "plate_leftovers"}
+{"ts": "2026-11-07T09:59:42", "event": "preselect", "type": "plate_leftovers", "ms": 930228}
+{"ts": "2026-11-07T10:07:29", "event": "info", "msg": "boot", "factor": 420.5, "restored": 1, "baseline": 0.0}

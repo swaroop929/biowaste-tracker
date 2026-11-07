@@ -97,7 +97,7 @@ one, from arXiv 2401.15175, has 19 classes but was never released. That is why `
 ### Your own photos
 
 ```bash
-python capture.py --phone http://192.168.43.1:8080
+python capture.py --phone http://192.168.23.223:8080
 ```
 
 For each item you take a before photo and an after photo. You then type the foods (numbers or names from
